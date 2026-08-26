@@ -8,7 +8,7 @@ import { z } from "zod";
 export const EM_DASH_MESSAGE =
   "Em dash and en dash are banned in site copy. Use a hyphen, comma, or period.";
 
-const DASH_PATTERN = /[–—]/;
+const DASH_PATTERN = /[\u2013\u2014]/;
 
 export const prose = z
   .string()

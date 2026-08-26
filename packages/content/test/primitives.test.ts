@@ -9,7 +9,7 @@ describe("prose", () => {
   });
 
   it("rejects an em dash", () => {
-    const result = prose.safeParse("Lead author — owned the balancing.");
+    const result = prose.safeParse("Lead author \u2014 owned the balancing.");
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.issues[0]?.message).toBe(EM_DASH_MESSAGE);
@@ -17,7 +17,7 @@ describe("prose", () => {
   });
 
   it("rejects an en dash", () => {
-    expect(prose.safeParse("2024–2026").success).toBe(false);
+    expect(prose.safeParse("2024\u20132026").success).toBe(false);
   });
 
   it("rejects an empty string", () => {
