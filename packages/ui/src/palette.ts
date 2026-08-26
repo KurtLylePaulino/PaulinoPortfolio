@@ -10,7 +10,7 @@ export const palette = {
   line: "#282420",
   ink: "#efe9df",
   inkMid: "#a09689",
-  inkLow: "#827868",
+  inkLow: "#8a8072",
   accent: "#c4913c",
 } as const;
 
