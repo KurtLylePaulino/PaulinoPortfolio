@@ -13,7 +13,9 @@ import path from "node:path";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, "..", "data");
 
+// Override with PORTFOLIO_SOURCE_DIR so this script can run on another machine.
 const SOURCE_DIR =
+  process.env.PORTFOLIO_SOURCE_DIR ??
   "E:\\CLAUDE WORKSTATION\\PortFolio\\FullPortfolio\\assets\\data";
 const ART_SOURCE = path.join(SOURCE_DIR, "art.json");
 const MUSIC_SOURCE = path.join(SOURCE_DIR, "music.json");
@@ -104,9 +106,14 @@ function buildArtAndVideo() {
       `artworks/${key}`,
     );
   }
+  // Per-collection uniqueness above isn't enough: the loader and tests treat
+  // ids as globally unique across all artwork collections combined.
+  assertUniqueIds(artworks, "artworks (global)");
 
   return { artworks, videos };
 }
+
+const MUSIC_CATEGORIES = new Set(["original", "dnd", "ruina"]);
 
 function buildTracks() {
   const raw = JSON.parse(readFileSync(MUSIC_SOURCE, "utf8"));
@@ -114,6 +121,10 @@ function buildTracks() {
 
   for (const category of raw.categories) {
     if (category.key === "personal") continue; // curated picks row, duplicates other tracks
+
+    if (!MUSIC_CATEGORIES.has(category.key)) {
+      throw new Error(`No handling for music category "${category.key}"`);
+    }
 
     for (const track of category.tracks) {
       tracks.push({

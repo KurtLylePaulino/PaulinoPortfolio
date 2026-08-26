@@ -27,9 +27,21 @@ describe("artworks", () => {
     }
   });
 
-  it("gives every artwork non-empty alt text", () => {
-    for (const art of artworks) {
-      expect(art.alt.length).toBeGreaterThan(0);
+  it("gives every artwork alt text naming its collection and position", () => {
+    const labels = {
+      artwork: "Concept artwork",
+      vivi: "Vivi character study",
+      yuria: "Yuria character study",
+      maps: "Battle map",
+      memes: "Meme",
+    } as const;
+    const totals = { artwork: 16, vivi: 11, yuria: 14, maps: 25, memes: 17 } as const;
+
+    for (const collection of Object.keys(labels) as (keyof typeof labels)[]) {
+      const group = artByCollection(collection);
+      group.forEach((art, index) => {
+        expect(art.alt).toBe(`${labels[collection]}, image ${index + 1} of ${totals[collection]}`);
+      });
     }
   });
 
@@ -38,6 +50,13 @@ describe("artworks", () => {
       expect(art.src).not.toMatch(/^https?:\/\//);
       expect(art.src).not.toMatch(/^assets\//);
       expect(art.thumb).not.toMatch(/^assets\//);
+    }
+  });
+
+  it("gives every artwork a thumb distinct from its full image", () => {
+    for (const art of artworks) {
+      expect(art.thumb).not.toBe(art.src);
+      expect(art.thumb).toContain("-thumb");
     }
   });
 });
@@ -74,9 +93,9 @@ describe("tracks", () => {
     for (const t of tracks) expect(t.vibe.length).toBeGreaterThan(0);
   });
 
-  it("preserves artist styling in titles", () => {
+  it("preserves the em dash in all six artist-styled titles", () => {
     const styled = tracks.filter((t) => t.title.includes("\u2014"));
-    expect(styled.length).toBeGreaterThan(0);
+    expect(styled).toHaveLength(6);
   });
 });
 
