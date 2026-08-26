@@ -152,6 +152,11 @@ describe("writingSchema", () => {
     const bad = { ...validWriting, blurb: "A chronology \u2014 of the Abyss." };
     expect(writingSchema.safeParse(bad).success).toBe(false);
   });
+
+  it("accepts a document with no year", () => {
+    const { year, ...withoutYear } = validWriting;
+    expect(writingSchema.safeParse(withoutYear).success).toBe(true);
+  });
 });
 
 describe("trackSchema", () => {

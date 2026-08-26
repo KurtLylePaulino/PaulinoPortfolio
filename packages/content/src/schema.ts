@@ -69,7 +69,8 @@ export const writingSchema = z.object({
   kind: z.enum(["lore", "story", "reference", "notes"]),
   blurb: prose,
   pdf: z.string().min(1),
-  year: z.string().refine((v) => /^\d{4}$/.test(v), { message: "Year must be YYYY" }),
+  /** Optional. The source documents do not record dates. */
+  year: z.string().refine((v) => /^\d{4}$/.test(v), { message: "Year must be YYYY" }).optional(),
 });
 
 export type Project = z.infer<typeof projectSchema>;

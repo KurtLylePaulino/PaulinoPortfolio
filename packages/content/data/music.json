@@ -1,0 +1,282 @@
+[
+  {
+    "id": "aoi-softly",
+    "title": "AOI, SOFTLY",
+    "collection": "original",
+    "src": "audio/original/aoi-softly.mp3",
+    "vibe": "ambient · soft"
+  },
+  {
+    "id": "debt-of-life2",
+    "title": "DEBT OF LIFE²",
+    "collection": "original",
+    "src": "audio/original/debt-of-life2.mp3",
+    "vibe": "industrial"
+  },
+  {
+    "id": "gutter-pulse",
+    "title": "Gutter Pulse",
+    "collection": "original",
+    "src": "audio/original/gutter-pulse.mp3",
+    "vibe": "darkwave · pulse"
+  },
+  {
+    "id": "neon-ghost-imagine-her",
+    "title": "Neon Ghost (Imagine Her)",
+    "collection": "original",
+    "src": "audio/original/neon-ghost-imagine-her.mp3",
+    "vibe": "synthwave · cyber"
+  },
+  {
+    "id": "the-crossroads-option",
+    "title": "The Crossroads Option",
+    "collection": "original",
+    "src": "audio/original/the-crossroads-option.mp3",
+    "vibe": "original"
+  },
+  {
+    "id": "the-reload-junction",
+    "title": "The Reload Junction",
+    "collection": "original",
+    "src": "audio/original/the-reload-junction.mp3",
+    "vibe": "original"
+  },
+  {
+    "id": "pandaemonium-be-not-afraid",
+    "title": "PANDÆMONIUM \u2014 BE NOT AFRAID",
+    "collection": "dnd",
+    "src": "audio/dnd/pandaemonium-be-not-afraid.mp3",
+    "vibe": "industrial · cyber"
+  },
+  {
+    "id": "pandaemonium-kill-die-repeat",
+    "title": "PANDÆMONIUM \u2014 KILL DIE REPEAT",
+    "collection": "dnd",
+    "src": "audio/dnd/pandaemonium-kill-die-repeat.mp3",
+    "vibe": "industrial · cyber"
+  },
+  {
+    "id": "the-slayer-the-sage-and-the-king",
+    "title": "The Slayer, The Sage, and The King",
+    "collection": "dnd",
+    "src": "audio/dnd/the-slayer-the-sage-and-the-king.mp3",
+    "vibe": "epic · narrative"
+  },
+  {
+    "id": "a-silver-lining-for-the-void",
+    "title": "A Silver Lining for the Void",
+    "collection": "dnd",
+    "src": "audio/dnd/a-silver-lining-for-the-void.mp3",
+    "vibe": "campaign score"
+  },
+  {
+    "id": "beneath-the-waking-tree",
+    "title": "Beneath the Waking Tree",
+    "collection": "dnd",
+    "src": "audio/dnd/beneath-the-waking-tree.mp3",
+    "vibe": "campaign score"
+  },
+  {
+    "id": "cantus-remembrantium",
+    "title": "Cantus Remembrantium",
+    "collection": "dnd",
+    "src": "audio/dnd/cantus-remembrantium.mp3",
+    "vibe": "campaign score"
+  },
+  {
+    "id": "hail-the-fate-breaker",
+    "title": "Hail the Fate Breaker",
+    "collection": "dnd",
+    "src": "audio/dnd/hail-the-fate-breaker.mp3",
+    "vibe": "campaign score"
+  },
+  {
+    "id": "he-swore-he-d-be-home",
+    "title": "He Swore He'd Be Home",
+    "collection": "dnd",
+    "src": "audio/dnd/he-swore-he-d-be-home.mp3",
+    "vibe": "campaign score"
+  },
+  {
+    "id": "keep-the-dark-at-bay",
+    "title": "KEEP THE DARK AT BAY",
+    "collection": "dnd",
+    "src": "audio/dnd/keep-the-dark-at-bay.mp3",
+    "vibe": "campaign score"
+  },
+  {
+    "id": "one-more-minute-til-dawn",
+    "title": "ONE MORE MINUTE TIL DAWN",
+    "collection": "dnd",
+    "src": "audio/dnd/one-more-minute-til-dawn.mp3",
+    "vibe": "campaign score"
+  },
+  {
+    "id": "pandaemonium-angel-error",
+    "title": "PANDÆMONIUM \u2014 ANGEL ERROR",
+    "collection": "dnd",
+    "src": "audio/dnd/pandaemonium-angel-error.mp3",
+    "vibe": "industrial · cyber"
+  },
+  {
+    "id": "pandaemonium-halo-override",
+    "title": "PANDÆMONIUM \u2014 HALO OVERRIDE",
+    "collection": "dnd",
+    "src": "audio/dnd/pandaemonium-halo-override.mp3",
+    "vibe": "industrial · cyber"
+  },
+  {
+    "id": "pandaemonium-seraphim-asset",
+    "title": "PANDÆMONIUM \u2014 SERAPHIM ASSET",
+    "collection": "dnd",
+    "src": "audio/dnd/pandaemonium-seraphim-asset.mp3",
+    "vibe": "industrial · cyber"
+  },
+  {
+    "id": "roll-her-north-my-lads",
+    "title": "Roll Her North, My Lads",
+    "collection": "dnd",
+    "src": "audio/dnd/roll-her-north-my-lads.mp3",
+    "vibe": "campaign score"
+  },
+  {
+    "id": "the-city-eats-the-city-feeds",
+    "title": "THE CITY EATS, THE CITY FEEDS",
+    "collection": "dnd",
+    "src": "audio/dnd/the-city-eats-the-city-feeds.mp3",
+    "vibe": "campaign score"
+  },
+  {
+    "id": "the-deadmen-no-grave-found",
+    "title": "THE DEADMEN \u2014 NO GRAVE FOUND",
+    "collection": "dnd",
+    "src": "audio/dnd/the-deadmen-no-grave-found.mp3",
+    "vibe": "industrial · cyber"
+  },
+  {
+    "id": "the-empty-chair-at-the-feast",
+    "title": "The Empty Chair at the Feast",
+    "collection": "dnd",
+    "src": "audio/dnd/the-empty-chair-at-the-feast.mp3",
+    "vibe": "campaign score"
+  },
+  {
+    "id": "the-farmer-s-tax-the-king-and-the-scythe",
+    "title": "The Farmer’s Tax (The King and the Scythe)",
+    "collection": "dnd",
+    "src": "audio/dnd/the-farmer-s-tax-the-king-and-the-scythe.mp3",
+    "vibe": "campaign score"
+  },
+  {
+    "id": "the-golden-harvest-of-sator",
+    "title": "The Golden Harvest of Sator",
+    "collection": "dnd",
+    "src": "audio/dnd/the-golden-harvest-of-sator.mp3",
+    "vibe": "campaign score"
+  },
+  {
+    "id": "the-merry-dog-of-fate",
+    "title": "The Merry Dog of Fate",
+    "collection": "dnd",
+    "src": "audio/dnd/the-merry-dog-of-fate.mp3",
+    "vibe": "campaign score"
+  },
+  {
+    "id": "the-price-of-a-loaf",
+    "title": "The Price of a Loaf",
+    "collection": "dnd",
+    "src": "audio/dnd/the-price-of-a-loaf.mp3",
+    "vibe": "campaign score"
+  },
+  {
+    "id": "the-road-that-swallowed-the-sun",
+    "title": "The Road That Swallowed the Sun",
+    "collection": "dnd",
+    "src": "audio/dnd/the-road-that-swallowed-the-sun.mp3",
+    "vibe": "campaign score"
+  },
+  {
+    "id": "the-sovereign-and-his-shadows",
+    "title": "The Sovereign and His Shadows",
+    "collection": "dnd",
+    "src": "audio/dnd/the-sovereign-and-his-shadows.mp3",
+    "vibe": "campaign score"
+  },
+  {
+    "id": "the-weight-of-a-good-person",
+    "title": "The Weight of a Good Person",
+    "collection": "ruina",
+    "src": "audio/ruina/the-weight-of-a-good-person.mp3",
+    "vibe": "cinematic"
+  },
+  {
+    "id": "a-crown-of-paper-stars-edit",
+    "title": "A Crown of Paper Stars (Edit)",
+    "collection": "ruina",
+    "src": "audio/ruina/a-crown-of-paper-stars-edit.mp3",
+    "vibe": "library of ruina"
+  },
+  {
+    "id": "a-perfect-papercut-bedroom",
+    "title": "A Perfect Papercut Bedroom",
+    "collection": "ruina",
+    "src": "audio/ruina/a-perfect-papercut-bedroom.mp3",
+    "vibe": "library of ruina"
+  },
+  {
+    "id": "a-sword-cannot-hold",
+    "title": "A Sword Cannot Hold",
+    "collection": "ruina",
+    "src": "audio/ruina/a-sword-cannot-hold.mp3",
+    "vibe": "library of ruina"
+  },
+  {
+    "id": "adagio-for-the-mask",
+    "title": "Adagio for the Mask",
+    "collection": "ruina",
+    "src": "audio/ruina/adagio-for-the-mask.mp3",
+    "vibe": "library of ruina"
+  },
+  {
+    "id": "one-last-sip-of-coffee",
+    "title": "One Last Sip of Coffee",
+    "collection": "ruina",
+    "src": "audio/ruina/one-last-sip-of-coffee.mp3",
+    "vibe": "library of ruina"
+  },
+  {
+    "id": "the-arbiter-s-tea",
+    "title": "The Arbiter’s Tea",
+    "collection": "ruina",
+    "src": "audio/ruina/the-arbiter-s-tea.mp3",
+    "vibe": "library of ruina"
+  },
+  {
+    "id": "the-high-of-the-low",
+    "title": "The High of the Low",
+    "collection": "ruina",
+    "src": "audio/ruina/the-high-of-the-low.mp3",
+    "vibe": "library of ruina"
+  },
+  {
+    "id": "the-pale-script",
+    "title": "The Pale Script",
+    "collection": "ruina",
+    "src": "audio/ruina/the-pale-script.mp3",
+    "vibe": "library of ruina"
+  },
+  {
+    "id": "the-standard-deviation",
+    "title": "The Standard Deviation",
+    "collection": "ruina",
+    "src": "audio/ruina/the-standard-deviation.mp3",
+    "vibe": "library of ruina"
+  },
+  {
+    "id": "the-weight-of-eternity-hokma",
+    "title": "The Weight of Eternity HOKMA",
+    "collection": "ruina",
+    "src": "audio/ruina/the-weight-of-eternity-hokma.mp3",
+    "vibe": "library of ruina"
+  }
+]
