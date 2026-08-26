@@ -10,6 +10,10 @@ describe("contrastRatio", () => {
   it("returns 1 for a color against itself", () => {
     expect(contrastRatio("#c4913c", "#c4913c")).toBeCloseTo(1, 5);
   });
+
+  it("rejects invalid hex digits", () => {
+    expect(() => contrastRatio("#gggggg", "#ffffff")).toThrow("Expected a six-digit hex color");
+  });
 });
 
 describe("Archive palette", () => {
@@ -26,6 +30,12 @@ describe("Archive palette", () => {
   it("keeps every world accent readable on the ground", () => {
     for (const [world, hex] of Object.entries(worldAccents)) {
       expect(contrastRatio(hex, palette.ground), `${world} accent`).toBeGreaterThanOrEqual(4.5);
+    }
+  });
+
+  it("keeps every world accent readable on raised surfaces", () => {
+    for (const [world, hex] of Object.entries(worldAccents)) {
+      expect(contrastRatio(hex, palette.raised), `${world} accent`).toBeGreaterThanOrEqual(4.5);
     }
   });
 
