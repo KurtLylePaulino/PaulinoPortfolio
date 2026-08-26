@@ -92,6 +92,31 @@ Writing  { id, title, kind, blurb, pdf, year }
 `domain` replaces the current `category` field and is used as a **filter tag**, never as a
 section heading. See 4.2.
 
+### 3.5 Adding projects later
+
+Kurt expects to add projects after launch. Adding one must never require touching layout code,
+so the build treats the project list as data from the start:
+
+1. Append an entry to `packages/content/data/projects.ts`. The Zod schema validates it at build
+   time, and a malformed entry fails the build instead of shipping a broken card.
+2. Drop its image in `media/`. The image pipeline picks it up.
+3. Optionally add a case study for the technical site. A project without one simply does not get
+   a case study page, and nothing else breaks.
+
+Rules that keep this true, and that implementation must not violate:
+
+- **No count is hardcoded.** No `slice(0, 7)`, no fixed grid template of seven cells, no copy
+  that says "seven projects". Grids derive their cell count from the data length.
+- **No layout branches on a specific project id.** Featured versus standard is the only
+  distinction, driven by the `featured` flag.
+- **Domain filter chips derive from the data**, so a new `domain` value produces a new chip
+  without a code change.
+- **Every optional field degrades gracefully.** A project with no `award`, `demo`, `media`, or
+  `metrics` renders correctly with those elements absent, not with empty containers.
+
+We ship with the current 7 projects. The older React and React Native coursework repos are
+deliberately out of scope for this build and get reviewed after launch.
+
 ## 4. Main site
 
 ### 4.1 Page structure
@@ -256,13 +281,65 @@ weight by roughly 60% and keeps the repo comfortable for git.
 
 Re-encoding is scripted in `media/` so it can be rerun when tracks are added.
 
-## 9. Deployment
+## 9. Version control, backup, and deployment
 
-Two GitHub Pages sites from one monorepo, via GitHub Actions. Each site builds independently and
-deploys to its own repo or to a project path. `.nojekyll` on both.
+### 9.1 Repository
 
-Existing repos `FullPortfolio` and `TechnicalPortfolio` stay untouched and live until the
-rebuild is verified. Nothing is deleted as part of this work.
+**`github.com/KurtLylePaulino/PaulinoPortfolio`**, public.
+
+One repo holds the monorepo and deploys both sites through a single GitHub Pages target:
+
+| Site | URL |
+|---|---|
+| Main | `https://kurtlylepaulino.github.io/PaulinoPortfolio/` |
+| Technical | `https://kurtlylepaulino.github.io/PaulinoPortfolio/technical/` |
+
+A single Pages deployment avoids cross-repo pushes, which would otherwise need a personal
+access token because the default `GITHUB_TOKEN` cannot write to another repository.
+
+Astro's `base` is set per site so asset paths resolve under the subpath.
+
+### 9.2 Branch model
+
+`main` holds only work that passes its phase criteria. Active work happens on a phase branch.
+
+```
+main
+├─ phase/1-foundation
+├─ phase/2-main-site
+├─ phase/3-technical-site
+└─ phase/4-assets-deploy
+```
+
+- Commit and push to the phase branch after each meaningful unit of work, not in one batch at
+  the end. This is the backup and archival mechanism Kurt asked for: progress survives a machine
+  failure and the history stays readable.
+- Merge a phase branch into `main` only when every item in its "done when" column passes.
+- Tag each merge (`phase-1`, `phase-2`, `phase-3`, `phase-4`) so any phase state can be recovered.
+- **Never force-push, never rewrite published history.** The archive is the point.
+
+### 9.3 Existing repos
+
+`FullPortfolio` and `TechnicalPortfolio` stay live and untouched until the rebuild is verified.
+Nothing is deleted or migrated as part of this work. Retiring them is a separate decision Kurt
+makes after seeing the result.
+
+### 9.4 Project source links
+
+Five of the seven projects have their own public repos. Each project's `links` array points at
+its real repository rather than at the profile root, so a reviewer can go from a card straight
+to the code.
+
+| Project | Repo |
+|---|---|
+| Fightmap Generator | `MapGenConcept` |
+| The Canrael Codex | `canrael-codex` |
+| Haiku Daily | `HaikuDaily` |
+| Jianghu Proverbs | `jianghu-proverbs` |
+| Library Management System | `Finals-Project-Webdev-LIBRARYMANAGEMENT` |
+
+Circuit Breakers and the melanoma CNN have no public repo. They link to the thesis manuscript
+and the notebook instead, and no fake repo link is invented for them.
 
 ## 10. Build order
 
