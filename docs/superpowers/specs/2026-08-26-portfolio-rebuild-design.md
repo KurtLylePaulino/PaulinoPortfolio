@@ -69,12 +69,18 @@ same way: one file, two consumers.
 
 ### 3.3 Stack
 
-- **Astro 5** with static output. Ships HTML with near-zero JavaScript.
+- **Astro 7.2.x** with static output. Ships HTML with near-zero JavaScript.
 - **npm workspaces.** No pnpm or turborepo, which would add ceremony this does not need.
-- **TypeScript** for content schemas so a malformed project fails the build instead of the page.
+- **TypeScript 7.x** for content schemas so a malformed project fails the build instead of the page.
+- **Zod 4.x** for runtime schema validation.
+- **Vitest 4.x** for the content and token test suites.
 - **No CSS framework.** The design system is small and specific. Tailwind would add a
   build dependency to save very little.
 - **Astro's `<Image>`** for responsive `srcset` generation across 175 images.
+
+**Prerequisite: Node 22.12.0 or newer.** Astro 7 declares `engines.node: ">=22.12.0"`. The
+build machine currently runs Node 20.17.0, so upgrading Node is the first step of Phase 1 and
+gates everything after it. Verified against npm on 2026-08-26.
 
 ### 3.4 Content model
 
