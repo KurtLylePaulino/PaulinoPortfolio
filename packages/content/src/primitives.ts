@@ -28,3 +28,11 @@ export const slug = z
   .refine((value) => /^[a-z0-9-]+$/.test(value), {
     message: "Slug must contain only lowercase letters, digits, and hyphens",
   });
+
+/**
+ * A title of pre-existing creative work: a track, a video, an artwork.
+ * Unlike `prose`, this permits em dashes and other punctuation, because the
+ * artist chose the styling and rewriting it would alter the work itself.
+ * Never use this for descriptive copy; that is what `prose` is for.
+ */
+export const properName = z.string().min(1, "A title cannot be empty");

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { httpUrl, prose, slug } from "./primitives.js";
+import { httpUrl, prose, properName, slug } from "./primitives.js";
 
 export const DOMAINS = ["ml", "game", "web", "tool"] as const;
 
@@ -45,13 +45,22 @@ export const artworkSchema = z.object({
   height: z.number().int().positive(),
 });
 
+export const videoSchema = z.object({
+  id: slug,
+  title: properName,
+  src: z.string().min(1),
+  poster: z.string().min(1).optional(),
+});
+
 export const trackSchema = z.object({
   id: slug,
-  title: prose,
+  title: properName,
   collection: z.enum(["original", "dnd", "ruina"]),
   src: z.string().min(1),
-  /** Length in whole seconds. */
-  duration: z.number().int().positive(),
+  /** Short genre tag from the source manifest, for example "darkwave / pulse". */
+  vibe: properName,
+  /** Optional. The audio element reports this at load time. */
+  duration: z.number().int().positive().optional(),
 });
 
 export const writingSchema = z.object({
@@ -65,6 +74,7 @@ export const writingSchema = z.object({
 
 export type Project = z.infer<typeof projectSchema>;
 export type Artwork = z.infer<typeof artworkSchema>;
+export type Video = z.infer<typeof videoSchema>;
 export type Track = z.infer<typeof trackSchema>;
 export type Writing = z.infer<typeof writingSchema>;
 export type Domain = (typeof DOMAINS)[number];

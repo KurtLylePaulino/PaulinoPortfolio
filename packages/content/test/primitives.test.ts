@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { EM_DASH_MESSAGE, httpUrl, prose, slug } from "../src/primitives.js";
+﻿import { describe, expect, it } from "vitest";
+import { EM_DASH_MESSAGE, httpUrl, prose, properName, slug } from "../src/primitives.js";
 
 describe("prose", () => {
   it("accepts ordinary copy", () => {
@@ -46,5 +46,24 @@ describe("slug", () => {
 
   it("rejects uppercase and spaces", () => {
     expect(slug.safeParse("Circuit Breakers").success).toBe(false);
+  });
+});
+
+describe("properName", () => {
+  it("accepts an ordinary title", () => {
+    expect(properName.parse("Gutter Pulse")).toBe("Gutter Pulse");
+  });
+
+  it("permits an em dash, because artists style their own titles", () => {
+    const title = "PANDÆMONIUM \u2014 BE NOT AFRAID";
+    expect(properName.parse(title)).toBe(title);
+  });
+
+  it("permits a middle dot", () => {
+    expect(properName.parse("darkwave · pulse")).toBe("darkwave · pulse");
+  });
+
+  it("rejects an empty string", () => {
+    expect(properName.safeParse("").success).toBe(false);
   });
 });
