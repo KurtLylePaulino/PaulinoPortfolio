@@ -76,7 +76,7 @@ same way: one file, two consumers.
 - **Vitest 4.x** for the content and token test suites.
 - **No CSS framework.** The design system is small and specific. Tailwind would add a
   build dependency to save very little.
-- **Astro's `<Image>`** for responsive `srcset` generation across 175 images.
+- **Astro's `<Image>`** for responsive `srcset` generation across 83 artworks.
 
 **Prerequisite: Node 22.12.0 or newer.** Astro 7 declares `engines.node: ">=22.12.0"`. The
 build machine currently runs Node 20.17.0, so upgrading Node is the first step of Phase 1 and
@@ -91,9 +91,51 @@ Project  { id, title, domain: 'ml'|'game'|'web'|'tool', year, featured,
            award?, tagline, blurb, summary, stack[], highlights[],
            metrics[{label,value}], media?, demo?, links[{label,href,kind}] }
 Artwork  { id, collection, src, thumb, alt, width, height }
-Track    { id, title, collection: 'original'|'dnd'|'ruina', src, duration }
+Video    { id, title, src, poster? }
+Track    { id, title, collection: 'original'|'dnd'|'ruina', src, vibe, duration? }
 Writing  { id, title, kind, blurb, pdf, year }
 ```
+
+**Three amendments made on 2026-08-26**, after auditing the actual source manifests
+against these schemas. Each was a decision Kurt approved:
+
+1. **`Video` is its own type.** The old `art.json` has six `motion` entries that are MP4
+   videos carrying only `video` and `title`, with no thumbnail or dimensions. Forcing them
+   through `Artwork` would mean making `thumb`, `width`, and `height` optional and leaving
+   every consumer to guess which shape it received. Videos are a different medium, so they
+   get a different type.
+2. **`Track.duration` is optional.** No source manifest records durations. The audio element
+   reports duration when a track loads, so the player fills it in at runtime. Baking values
+   in would mean parsing 40 MP3s and re-running that whenever tracks change, and the numbers
+   shift anyway when Phase 4 re-encodes to 128 kbps.
+3. **`Artwork.alt` stays required and is generated at migration time.** No source image has
+   alt text. Migration writes structured text from the collection and position, for example
+   "Yuria character study, image 3 of 14". Keeping the field required preserves the
+   accessibility discipline the Lighthouse target depends on. Replacing the generated text
+   with real descriptions is a tracked follow-up, not a blocker.
+
+### 3.4.1 Actual content inventory
+
+Verified against the source manifests on 2026-08-26.
+
+| Collection | Count | Notes |
+|---|---|---|
+| `artwork` | 16 | still images |
+| `vivi` | 11 | still images |
+| `yuria` | 14 | still images |
+| `maps` | 25 | still images |
+| `memes` | 17 | still images |
+| **stills total** | **83** | each has a full and a thumb file, hence 166 image files |
+| `motion` | 6 | MP4 video, becomes `Video` |
+| music `original` | 6 | |
+| music `dnd` | 23 | |
+| music `ruina` | 11 | |
+| **tracks total** | **40** | unique sources |
+| writing | 10 | PDFs, hand-authored manifest |
+
+The old `music.json` also carries a `personal` category of 5 "picks" that duplicate tracks
+from the other three. It is a curated view, not a collection, so it does not become data.
+If a picks row is wanted on the music page, it belongs in Phase 2 as a list of track ids.
 
 `domain` replaces the current `category` field and is used as a **filter tag**, never as a
 section heading. See 4.2.
@@ -158,7 +200,7 @@ the rest get standard cells. The grid has exactly as many cells as there are pro
 Presented with equal visual weight, after the work index has established that Kurt engineers.
 
 - **Work**: the full project index
-- **Art**: 5 collections, 175 images, lightbox
+- **Art**: 5 collections, 83 stills plus 6 videos, lightbox
 - **Music**: 40 tracks, 3 playlists, one player
 - **Writing**: Canrael. 10 documents, world summary, timeline
 
@@ -276,7 +318,7 @@ every button label. No two CTAs share an intent.
 | Asset | Current | Plan |
 |---|---|---|
 | Audio | **239 MB**, 40 tracks | Re-encode to 128 kbps VBR (~90 MB). Lazy-load: nothing downloads until play is pressed. |
-| Images | 28 MB WebP, 175 files | Already optimized. Astro generates responsive `srcset`. |
+| Images | 28 MB WebP, 166 files (83 stills, full + thumb) | Already optimized. Astro generates responsive `srcset`. |
 | Video | 23 MB, 6 files | Poster frames, load on interaction. |
 | Docs | 20 MB PDFs | Keep. Compress the 14 MB `paradigms-reach-setup.pdf`. |
 
@@ -384,5 +426,5 @@ Phase 1 gates everything. Phases 2 and 3 can proceed in either order once it lan
 | Risk | Mitigation |
 |---|---|
 | 90 MB of audio still makes for a heavy git repo | Lazy loading means visitors never pay for it. Revisit external hosting if the repo becomes unwieldy. |
-| Astro's image pipeline over 175 files may slow builds | Measure. Precomputed thumbs already exist and can be used directly if needed. |
+| Astro image pipeline over 166 files may slow builds | Measure. Precomputed thumbs already exist and can be used directly if needed. |
 | Two sites means two sets of copy to keep in sync | Shared content package holds the canonical blurbs. Site-specific copy is deliberately short. |
