@@ -231,7 +231,9 @@ one dressing up as the other.
 
 ### 6.1 Color
 
-All values verified against WCAG AA for body text on the ground.
+All values verified against WCAG AA for body text on BOTH the ground and the raised
+surface. The raised surface is the harder test because it is lighter; a value that
+passes on the ground can still fail there. Ratios below are against the ground.
 
 | Token | Hex | Contrast on ground | Use |
 |---|---|---|---|
@@ -240,7 +242,7 @@ All values verified against WCAG AA for body text on the ground.
 | `--line` | `#282420` | n/a | Hairlines, borders |
 | `--ink` | `#efe9df` | 16.29 | Primary text, headings |
 | `--ink-mid` | `#a09689` | 6.76 | Body text, descriptions |
-| `--ink-low` | `#827868` | 4.53 | Metadata, captions, years |
+| `--ink-low` | `#8a8072` | 5.07 | Metadata, captions, years |
 | `--accent` | `#c4913c` | 6.99 | Brass. Links, awards, focus rings |
 
 **World accents.** Each world page carries one secondary hue inside the same system, like

@@ -1169,7 +1169,7 @@ export const palette = {
   line: "#282420",
   ink: "#efe9df",
   inkMid: "#a09689",
-  inkLow: "#827868",
+  inkLow: "#8a8072",
   accent: "#c4913c",
 } as const;
 
@@ -1194,7 +1194,7 @@ export const worldAccents = {
   --line: #282420;
   --ink: #efe9df;
   --ink-mid: #a09689;
-  --ink-low: #827868;
+  --ink-low: #8a8072;
   --accent: #c4913c;
 
   --accent-work: #c4913c;
