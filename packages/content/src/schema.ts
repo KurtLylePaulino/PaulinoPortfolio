@@ -57,7 +57,7 @@ export const trackSchema = z.object({
   title: properName,
   collection: z.enum(["original", "dnd", "ruina"]),
   src: z.string().min(1),
-  /** Short genre tag from the source manifest, for example "darkwave / pulse". */
+  /** Short genre tag from the source manifest, for example "darkwave · pulse". */
   vibe: properName,
   /** Optional. The audio element reports this at load time. */
   duration: z.number().int().positive().optional(),

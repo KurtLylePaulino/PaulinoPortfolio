@@ -30,9 +30,13 @@ export const slug = z
   });
 
 /**
- * A title of pre-existing creative work: a track, a video, an artwork.
+ * A title of pre-existing creative work: a track or a video.
  * Unlike `prose`, this permits em dashes and other punctuation, because the
  * artist chose the styling and rewriting it would alter the work itself.
- * Never use this for descriptive copy; that is what `prose` is for.
+ *
+ * Use it ONLY for `trackSchema.title`, `trackSchema.vibe`, and
+ * `videoSchema.title`. Never use it for descriptive copy such as `alt`,
+ * `blurb`, `tagline`, or `summary`; those must stay on `prose`, which is what
+ * enforces the em-dash ban across the site.
  */
 export const properName = z.string().min(1, "A title cannot be empty");

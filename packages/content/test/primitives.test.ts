@@ -1,4 +1,4 @@
-﻿import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { EM_DASH_MESSAGE, httpUrl, prose, properName, slug } from "../src/primitives.js";
 
 describe("prose", () => {
