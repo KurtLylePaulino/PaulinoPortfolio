@@ -62,6 +62,11 @@ const primaryLink = (project: Project) =>
         <div class="grid" style={`grid-template-columns: repeat(${gridColumns}, 1fr);`}>
           {remainder.map((project) => (
             <article class="cell">
+              {project.media && (
+                <div class="cell__media">
+                  <img src={withBase(project.media)} alt={project.tagline} loading="lazy" />
+                </div>
+              )}
               <h3 class="cell__title">{project.title}</h3>
               <p class="cell__year">{project.year}</p>
               <p class="cell__blurb">{project.blurb}</p>
@@ -98,115 +103,172 @@ const primaryLink = (project: Project) =>
     text-wrap: balance;
   }
 
+  /* Media sits ABOVE or BESIDE the copy on a raised surface here. The worlds
+     grid overlays copy ON TOP of its images, so the two stay distinct. */
+  .feature,
+  .cell {
+    background: var(--raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition:
+      transform 400ms var(--ease),
+      border-color 400ms var(--ease),
+      box-shadow 400ms var(--ease);
+  }
+
+  .feature:hover,
+  .cell:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+    box-shadow: 0 18px 44px -24px color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+
   .feature {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-5);
-    align-items: center;
+    align-items: stretch;
   }
 
+  .feature__media,
+  .cell__media {
+    position: relative;
+    overflow: hidden;
+    background: var(--ground);
+  }
+
+  /* Project captures are raw UI screenshots and run far brighter and more
+     saturated than the palette. Damping them keeps the page one system
+     instead of a dark page with a bright rectangle stapled to it. */
   .feature__media img,
+  .cell__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.72) brightness(0.68) contrast(0.96);
+    transform: scale(1.01);
+    transition:
+      transform 900ms var(--ease),
+      filter 500ms var(--ease);
+  }
+
+  .feature:hover .feature__media img,
+  .cell:hover .cell__media img {
+    transform: scale(1.05);
+    filter: saturate(0.92) brightness(0.82) contrast(1);
+  }
+
+  /* A scrim so the capture reads as part of the surface, not pasted onto it. */
+  .feature__media::after,
+  .cell__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      to right,
+      transparent 55%,
+      color-mix(in srgb, var(--raised) 70%, transparent) 100%
+    );
+  }
+
+  .cell__media::after {
+    background: linear-gradient(
+      to bottom,
+      transparent 55%,
+      color-mix(in srgb, var(--raised) 80%, transparent) 100%
+    );
+  }
+
+  .feature__media img {
+    aspect-ratio: 16 / 10;
+  }
+
+  .cell__media img {
+    aspect-ratio: 16 / 10;
+  }
+
   .feature__media-fallback {
     display: block;
     width: 100%;
     aspect-ratio: 16 / 10;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--line);
+    background: var(--ground);
   }
 
-  .feature__media img {
-    object-fit: cover;
-  }
-
-  .feature__media-fallback {
-    background: var(--raised);
+  .feature__body,
+  .cell {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
   }
 
   .feature__body {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
+    justify-content: center;
+    padding: var(--space-5);
   }
 
+  .cell {
+    padding: 0;
+  }
+
+  .cell > :not(.cell__media) {
+    margin-inline: var(--space-4);
+  }
+
+  .cell > :first-child:not(.cell__media) {
+    margin-top: var(--space-4);
+  }
+
+  .cell > :last-child {
+    margin-bottom: var(--space-4);
+  }
+
+  .cell__title,
   .feature__title {
     margin: 0;
     font-family: var(--font-display);
-    font-size: var(--step-1);
     font-weight: 600;
     letter-spacing: -0.015em;
     line-height: 1.2;
     color: var(--ink);
     text-wrap: balance;
+  }
+
+  .feature__title {
+    font-size: var(--step-2);
+  }
+
+  .cell__title {
+    font-size: var(--step-1);
+    margin-top: var(--space-3);
   }
 
   .feature__award {
     margin: 0;
     font-family: var(--font-mono);
     font-size: var(--step--1);
-    font-weight: 400;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.04em;
     line-height: 1.4;
     color: var(--accent);
-  }
-
-  .feature__blurb {
-    margin: 0;
-    max-width: var(--measure);
-    font-family: var(--font-body);
-    font-size: var(--step-0);
-    font-weight: 400;
-    line-height: 1.6;
-    color: var(--ink-mid);
-  }
-
-  .feature__link {
-    color: var(--ink);
-    font-family: var(--font-body);
-    font-size: var(--step-0);
-    font-weight: 600;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    width: fit-content;
-  }
-
-  .grid {
-    display: grid;
-    gap: var(--space-5);
-  }
-
-  .cell {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-
-  .cell__title {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: var(--step-1);
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    line-height: 1.2;
-    color: var(--ink);
-    text-wrap: balance;
   }
 
   .cell__year {
     margin: 0;
     font-family: var(--font-mono);
     font-size: var(--step--1);
-    font-weight: 400;
     letter-spacing: 0.02em;
     line-height: 1.4;
     color: var(--ink-low);
+    font-variant-numeric: tabular-nums;
   }
 
+  .feature__blurb,
   .cell__blurb {
     margin: 0;
-    max-width: var(--measure);
+    max-width: 52ch;
     font-family: var(--font-body);
     font-size: var(--step-0);
-    font-weight: 400;
     line-height: 1.6;
     color: var(--ink-mid);
   }
@@ -215,33 +277,101 @@ const primaryLink = (project: Project) =>
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
-    margin: 0;
+    margin: var(--space-1) 0 0;
     padding: 0;
     list-style: none;
   }
 
   .chip {
-    padding: var(--space-1) var(--space-2);
     font-family: var(--font-mono);
     font-size: var(--step--1);
-    color: var(--ink-low);
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    padding: 0.2rem 0.5rem;
     border: 1px solid var(--line);
     border-radius: var(--radius-sm);
+    color: var(--ink-low);
+  }
+
+  /* The flagship project's primary action. It was an underlined text link,
+     which is a weak affordance for the most important link in the section. */
+  .feature__link {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    margin-top: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--ground) 60%, transparent);
+    transition:
+      border-color 200ms var(--ease),
+      color 200ms var(--ease);
+  }
+
+  .feature__link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--space-3);
   }
 
   .all-work {
-    color: var(--ink);
-    font-family: var(--font-body);
-    font-size: var(--step-0);
-    font-weight: 600;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    width: fit-content;
+    align-self: flex-start;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink-mid);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.2rem;
+    transition:
+      color 200ms var(--ease),
+      border-color 200ms var(--ease);
+  }
+
+  .all-work:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .feature,
+    .cell,
+    .feature__media img,
+    .cell__media img {
+      transition: none;
+    }
+
+    .feature:hover,
+    .cell:hover {
+      transform: none;
+    }
+
+    .feature:hover .feature__media img,
+    .cell:hover .cell__media img {
+      transform: scale(1.01);
+    }
   }
 
   @media (max-width: 767px) {
     .feature {
       grid-template-columns: 1fr;
+    }
+
+    .feature__body {
+      padding: var(--space-4);
     }
 
     .grid {
