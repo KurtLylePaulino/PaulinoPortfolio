@@ -11,12 +11,16 @@ import AboutContact from "../components/AboutContact.astro";
 
 <BaseLayout title="Kurt Lyle Paulino" description="Developer. Machine learning, tools, and games.">
   <SiteNav current="home" />
-  <main class="page">
+  <main>
+    <!-- The hero sits outside the container so its atmosphere runs full bleed
+         and the nav appears to float over it. Everything after it is contained. -->
     <HeroSection />
-    <SelectedWork />
-    <Credentials />
-    <WorldsGrid />
-    <AboutContact />
+    <div class="page">
+      <SelectedWork />
+      <Credentials />
+      <WorldsGrid />
+      <AboutContact />
+    </div>
   </main>
   <SiteFooter />
 </BaseLayout>

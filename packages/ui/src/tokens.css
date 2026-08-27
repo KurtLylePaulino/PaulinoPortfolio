@@ -20,6 +20,11 @@
   --font-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
 
+  /* One purpose-named display size. The modular scale below tops out at
+     2.488rem, which is too small to anchor a page, and extending the whole
+     scale just to reach hero sizes would add steps nothing else uses. */
+  --step-display: clamp(2.5rem, 1.15rem + 4.6vw, 4.75rem);
+
   --step--1: 0.833rem;
   --step-0: 1rem;
   --step-1: 1.2rem;
@@ -39,6 +44,9 @@
   --radius-sm: 2px;
   --radius-md: 3px;
   --measure: 65ch;
+
+  /* Shared easing so entrances, hovers, and reveals all move the same way. */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Page container: the max-width and fluid side padding used by every
      full-width section. Never repeat the underlying values in a component. */
