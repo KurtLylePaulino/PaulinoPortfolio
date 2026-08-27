@@ -1,0 +1,155 @@
+---
+import Reveal from "@portfolio/ui/components/Reveal.astro";
+import { artworks, projects, tracks, writings } from "@portfolio/content";
+
+const base = import.meta.env.BASE_URL;
+const withBase = (path: string) => `${base.replace(/\/+$/, "")}/${path.replace(/^\/+/, "")}`;
+
+// Picked by id, not randomly, so every tile image is stable across builds.
+const artById = (id: string) => {
+  const artwork = artworks.find((a) => a.id === id);
+  if (!artwork) throw new Error(`Worlds grid artwork "${id}" is missing from the artwork collection.`);
+  return artwork;
+};
+
+const workImage = "img/projects/fightmap-generator.webp";
+const artImage = artById("vivi-01");
+const musicImage = artById("artwork-01");
+const writingImage = artById("maps-01");
+
+const worlds = [
+  {
+    title: "Work",
+    href: withBase("work"),
+    accent: "var(--accent-work)",
+    description: "Games, machine learning, tools, and the web.",
+    count: `${projects.length} projects`,
+    src: withBase(workImage),
+    alt: "Screenshot of the Fightmap Generator rendering a top-down dungeon tile map with glowing light sources.",
+  },
+  {
+    title: "Art",
+    href: withBase("art"),
+    accent: "var(--accent-art)",
+    description: "Character studies, battle maps, and motion pieces.",
+    count: `${artworks.length} pieces`,
+    src: withBase(artImage.src),
+    alt: "A grinning character illustration with a glowing halo and a lab coat, watched by disembodied eyes in the dark windows behind her.",
+  },
+  {
+    title: "Music",
+    href: withBase("music"),
+    accent: "var(--accent-music)",
+    description: "Originals, a campaign score, and fan works.",
+    count: `${tracks.length} tracks`,
+    src: withBase(musicImage.src),
+    alt: "A vast underground temple chamber with tiered stone platforms and glowing blue light rising from a central altar.",
+  },
+  {
+    title: "Writing",
+    href: withBase("writing"),
+    accent: "var(--accent-writing)",
+    description: "Canrael: a dark fantasy world, seven years in.",
+    count: `${writings.length} documents`,
+    src: withBase(writingImage.src),
+    alt: "An aerial view of a ruined, moss covered city built around a dark crater, wrapped in teal fog.",
+  },
+];
+---
+
+<Reveal>
+  <section class="worlds">
+    <h2 class="worlds__heading">Four worlds</h2>
+    <div class="worlds__grid">
+      {
+        worlds.map((world) => (
+          <a class="tile" href={world.href} style={`--tile-accent: ${world.accent};`}>
+            <img class="tile__image" src={world.src} alt={world.alt} loading="lazy" />
+            <h3 class="tile__title">{world.title}</h3>
+            <p class="tile__description">{world.description}</p>
+            <p class="tile__count">{world.count}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Reveal>
+
+<style>
+  .worlds {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .worlds__heading {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .worlds__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+
+  .tile {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-top: var(--space-3);
+    border-top: 2px solid var(--tile-accent);
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .tile__image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+  }
+
+  .tile__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+
+  .tile__description {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--ink-mid);
+  }
+
+  .tile__count {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+    color: var(--ink-low);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 767px) {
+    .worlds__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
