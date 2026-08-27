@@ -1,0 +1,51 @@
+---
+const base = import.meta.env.BASE_URL;
+const withBase = (path: string) => `${base.replace(/\/+$/, "")}/${path.replace(/^\/+/, "")}`;
+
+const year = new Date().getFullYear();
+const links = [
+  { label: "Work", href: withBase("work") },
+  { label: "Art", href: withBase("art") },
+  { label: "Music", href: withBase("music") },
+  { label: "Writing", href: withBase("writing") },
+];
+---
+
+<footer class="site-footer">
+  <p class="site-footer__line">
+    <span>Kurt Lyle Paulino, {year}</span>
+    {
+      links.map((link) => (
+        <a href={link.href}>{link.label}</a>
+      ))
+    }
+  </p>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--line);
+  }
+
+  .site-footer__line {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: var(--space-4) clamp(1.25rem, 4vw, 3rem);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-3);
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    color: var(--ink-low);
+  }
+
+  .site-footer__line a {
+    color: var(--ink-low);
+    text-decoration: none;
+  }
+
+  .site-footer__line a:hover {
+    color: var(--ink-mid);
+  }
+</style>
