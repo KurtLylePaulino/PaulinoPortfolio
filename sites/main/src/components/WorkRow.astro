@@ -1,0 +1,146 @@
+---
+/**
+ * One row in the work index register.
+ *
+ * The whole row is a single link. `data-domain` is what the index page's
+ * generated CSS filters key off, so it must land on this root element, not
+ * somewhere nested where a sibling selector could not reach it.
+ */
+import { domainMeta, type Project } from "@portfolio/content";
+
+interface Props {
+  project: Project;
+  href: string;
+}
+
+const { project, href } = Astro.props;
+const meta = domainMeta(project.domain);
+---
+
+<a
+  class="row"
+  data-domain={project.domain}
+  href={href}
+  style={`--row-accent: ${meta.accent};`}
+>
+  <span class="row__stripe" aria-hidden="true"></span>
+  <span class="row__main">
+    <span class="row__title">{project.title}</span>
+    <span class="row__tagline">{project.tagline}</span>
+  </span>
+  <span class="row__meta">
+    <span class="row__year">{project.year}</span>
+    <span class="row__domain">{meta.label}</span>
+  </span>
+</a>
+
+<style>
+  .row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    padding-left: calc(var(--space-4) + 6px);
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 1px solid var(--line);
+    /* Background and stripe opacity only. A row that also translates on
+       hover is unpleasant to scan down a list of. */
+    transition:
+      background-color 200ms var(--ease),
+      color 200ms var(--ease);
+  }
+
+  .row__stripe {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--row-accent);
+    opacity: 0.4;
+    transition: opacity 200ms var(--ease);
+  }
+
+  .row:hover {
+    background: var(--raised);
+  }
+
+  .row:hover .row__stripe {
+    opacity: 1;
+  }
+
+  .row:hover .row__title {
+    color: var(--row-accent);
+  }
+
+  .row__main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .row__title {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    color: var(--ink);
+    transition: color 200ms var(--ease);
+  }
+
+  .row__tagline {
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    line-height: 1.5;
+    color: var(--ink-mid);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .row__meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.3rem;
+    flex: 0 0 auto;
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.02em;
+    color: var(--ink-low);
+  }
+
+  .row__year {
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .row,
+    .row__stripe,
+    .row__title {
+      transition: none;
+    }
+  }
+
+  @media (max-width: 559px) {
+    .row {
+      flex-wrap: wrap;
+      row-gap: var(--space-2);
+    }
+
+    .row__meta {
+      flex-direction: row;
+      align-items: baseline;
+      gap: var(--space-2);
+      width: 100%;
+      justify-content: flex-start;
+      padding-left: 0;
+    }
+  }
+</style>
