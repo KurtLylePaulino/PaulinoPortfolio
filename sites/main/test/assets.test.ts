@@ -20,4 +20,8 @@ describe("staged media", () => {
       .filter((m) => !existsSync(mediaRoot + m));
     expect(missing).toEqual([]);
   });
+
+  it("has the resume file", () => {
+    expect(existsSync(mediaRoot + "resume.pdf")).toBe(true);
+  });
 });

@@ -24,7 +24,7 @@ describe("home page", () => {
     const doc = html();
     const match = doc.match(/Computer Science, De La Salle Lipa\.[^<]*/);
     expect(match).not.toBeNull();
-    expect(match![0].trim().split(/\s+/).length).toBeLessThanOrEqual(24);
+    expect(match![0].trim().split(/\s+/).length).toBeLessThanOrEqual(20);
   });
 
   it("ships no literal em or en dash", () => {
