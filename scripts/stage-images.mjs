@@ -56,19 +56,6 @@ async function loadContent() {
   return import(pathToFileURL(CONTENT_ENTRY).href);
 }
 
-/**
- * Every asset in the source tree lives under assets/img/. art.json's src and
- * thumb paths already carry that prefix (e.g. "img/art/artwork/artwork-01
- * .webp"), copied verbatim from the source layout by the migration script.
- * Project `media` values were hand-authored without it (e.g.
- * "projects/circuit-breakers.webp"). Normalizing here, rather than editing
- * that data, resolves both against where the bytes actually live without
- * touching the content package.
- */
-function sourceRelativePath(declaredPath) {
-  return declaredPath.startsWith("img/") ? declaredPath : `img/${declaredPath}`;
-}
-
 /** Builds the { declaredPath, sourceAbs, destAbs } work list from the content package. */
 function buildWorkList({ artworks, projects }) {
   const byDestAbs = new Map();
@@ -78,7 +65,7 @@ function buildWorkList({ artworks, projects }) {
     if (byDestAbs.has(destAbs)) return;
     byDestAbs.set(destAbs, {
       declaredPath,
-      sourceAbs: path.join(SOURCE_ROOT, sourceRelativePath(declaredPath)),
+      sourceAbs: path.join(SOURCE_ROOT, declaredPath),
       destAbs,
     });
   };
