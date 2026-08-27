@@ -5,6 +5,15 @@ import { describe, expect, it } from "vitest";
 const read = (name: string) =>
   readFileSync(fileURLToPath(new URL(`../components/${name}`, import.meta.url)), "utf8");
 
+// The home page renders SiteNav with current="home", so its built output is
+// the concrete evidence that aria-current actually reaches the DOM rather
+// than just being mentioned in source.
+const homePageHtml = () =>
+  readFileSync(
+    fileURLToPath(new URL("../../../sites/main/dist/index.html", import.meta.url)),
+    "utf8",
+  );
+
 describe("SiteNav", () => {
   const src = read("SiteNav.astro");
 
@@ -17,8 +26,12 @@ describe("SiteNav", () => {
     expect(src).toContain("aria-current");
   });
 
+  it("actually emits aria-current=\"page\" in built output", () => {
+    expect(homePageHtml()).toContain('aria-current="page"');
+  });
+
   it("caps its height so it cannot eat the viewport", () => {
-    expect(src).toMatch(/max-height|height:\s*\d/);
+    expect(src).toMatch(/max-height:\s*72px/);
   });
 });
 

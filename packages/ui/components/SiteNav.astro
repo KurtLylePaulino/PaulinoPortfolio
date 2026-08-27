@@ -18,7 +18,13 @@ const links = [
 
 <nav class="site-nav" aria-label="Primary">
   <div class="site-nav__row">
-    <a class="site-nav__brand" href={home}>Kurt Lyle Paulino</a>
+    <a
+      class="site-nav__brand"
+      href={home}
+      aria-current={current === "home" ? "page" : undefined}
+    >
+      Kurt Lyle Paulino
+    </a>
     <ul class="site-nav__links">
       {
         links.map((link) => (
