@@ -1,0 +1,16 @@
+---
+import { domainsInUse, featuredProjects, projects } from "@portfolio/content";
+import Base from "../layouts/Base.astro";
+---
+<Base title="Kurt Lyle Paulino: Technical" description="Developer. Machine learning, tools, and games.">
+  <main>
+    <h1>Kurt Lyle Paulino</h1>
+    <p>{projects.length} projects, {featuredProjects.length} featured.</p>
+    <ul>
+      {projects.map((project) => (
+        <li>{project.title} ({project.domain}, {project.year})</li>
+      ))}
+    </ul>
+    <p>Domains: {domainsInUse().join(", ")}</p>
+  </main>
+</Base>
