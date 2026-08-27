@@ -17,6 +17,19 @@ const artImage = artById("vivi-01");
 const musicImage = artById("artwork-01");
 const writingImage = artById("maps-01");
 
+// Each tile is a single <a> wrapping the image, heading, and description, so
+// a screen reader concatenates all of it into the link's accessible name.
+// The image alt text below would be announced first, ahead of the world's
+// own name, so the images are marked decorative (alt="") in the markup and
+// the descriptions are kept here instead so the writing is not lost.
+//   Work:    Screenshot of the Fightmap Generator rendering a top-down
+//            dungeon tile map with glowing light sources.
+//   Art:     A grinning character illustration with a glowing halo and a lab
+//            coat, watched by disembodied eyes in the dark windows behind her.
+//   Music:   A vast underground temple chamber with tiered stone platforms
+//            and glowing blue light rising from a central altar.
+//   Writing: An aerial view of a ruined, moss covered city built around a
+//            dark crater, wrapped in teal fog.
 const worlds = [
   {
     title: "Work",
@@ -25,7 +38,6 @@ const worlds = [
     description: "Games, machine learning, tools, and the web.",
     count: `${projects.length} projects`,
     src: withBase(workImage),
-    alt: "Screenshot of the Fightmap Generator rendering a top-down dungeon tile map with glowing light sources.",
   },
   {
     title: "Art",
@@ -34,7 +46,6 @@ const worlds = [
     description: "Character studies, battle maps, and motion pieces.",
     count: `${artworks.length} pieces`,
     src: withBase(artImage.src),
-    alt: "A grinning character illustration with a glowing halo and a lab coat, watched by disembodied eyes in the dark windows behind her.",
   },
   {
     title: "Music",
@@ -43,7 +54,6 @@ const worlds = [
     description: "Originals, a campaign score, and fan works.",
     count: `${tracks.length} tracks`,
     src: withBase(musicImage.src),
-    alt: "A vast underground temple chamber with tiered stone platforms and glowing blue light rising from a central altar.",
   },
   {
     title: "Writing",
@@ -52,7 +62,6 @@ const worlds = [
     description: "Canrael: a dark fantasy world, seven years in.",
     count: `${writings.length} documents`,
     src: withBase(writingImage.src),
-    alt: "An aerial view of a ruined, moss covered city built around a dark crater, wrapped in teal fog.",
   },
 ];
 ---
@@ -64,7 +73,7 @@ const worlds = [
       {
         worlds.map((world) => (
           <a class="tile" href={world.href} style={`--tile-accent: ${world.accent};`}>
-            <img class="tile__image" src={world.src} alt={world.alt} loading="lazy" />
+            <img class="tile__image" src={world.src} alt="" loading="lazy" />
             <h3 class="tile__title">{world.title}</h3>
             <p class="tile__description">{world.description}</p>
             <p class="tile__count">{world.count}</p>
