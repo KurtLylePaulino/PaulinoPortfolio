@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { httpUrl, prose, properName, slug } from "./primitives.js";
+import { httpUrl, linkHref, prose, properName, slug } from "./primitives.js";
 
 export const DOMAINS = ["ml", "game", "web", "tool"] as const;
 
 const linkSchema = z.object({
   label: prose,
-  href: httpUrl,
+  href: linkHref,
   kind: z.enum(["primary", "secondary"]).default("secondary"),
 });
 

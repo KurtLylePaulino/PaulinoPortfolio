@@ -1,0 +1,122 @@
+---
+import Reveal from "@portfolio/ui/components/Reveal.astro";
+
+const base = import.meta.env.BASE_URL;
+const withBase = (path: string) => `${base.replace(/\/+$/, "")}/${path.replace(/^\/+/, "")}`;
+
+const links = [
+  { label: "GitHub", href: "https://github.com/KurtLylePaulino", external: true },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/kurt-lyle-paulino-33b217332/",
+    external: true,
+  },
+  { label: "Email", href: "mailto:kurtlylep@gmail.com", external: false },
+  { label: "Resume", href: withBase("resume.pdf"), external: false },
+];
+---
+
+<Reveal>
+  <section class="about">
+    <h2 class="about__heading">About</h2>
+    <div class="about__columns">
+      <div class="about__prose">
+        <p>
+          I am a Computer Science graduate from De La Salle Lipa, where I took the game
+          development track. My thesis, Circuit Breakers, is a 2D cybersecurity roguelike built
+          in Unity. It won Best Thesis, Best Paper, and Best Presenter, and I was lead author on
+          the paper.
+        </p>
+        <p>
+          I also trained a convolutional neural network that reads dermoscopic images above 90%
+          accuracy, and I have shipped several front end web apps. Outside of code I write music,
+          generate visual art, and keep building Canrael.
+        </p>
+      </div>
+      <ul class="about__links">
+        {
+          links.map((link) => (
+            <li>
+              {link.external ? (
+                <a href={link.href} target="_blank" rel="noopener">
+                  {link.label}
+                </a>
+              ) : (
+                <a href={link.href}>{link.label}</a>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Reveal>
+
+<style>
+  .about {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .about__heading {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .about__columns {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-6);
+  }
+
+  .about__prose {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    max-width: var(--measure);
+  }
+
+  .about__prose p {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--ink-mid);
+  }
+
+  .about__links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .about__links a {
+    font-family: var(--font-mono);
+    font-size: var(--step-0);
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .about__links a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  @media (max-width: 767px) {
+    .about__columns {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+  }
+</style>

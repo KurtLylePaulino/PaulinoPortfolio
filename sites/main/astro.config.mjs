@@ -5,4 +5,5 @@ export default defineConfig({
   base: "/PaulinoPortfolio",
   output: "static",
   trailingSlash: "ignore",
+  publicDir: "../../media",
 });

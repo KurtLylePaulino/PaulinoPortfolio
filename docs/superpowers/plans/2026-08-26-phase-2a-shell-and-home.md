@@ -65,7 +65,7 @@ Body text is capped at `--measure` (65ch). Headings get `text-wrap: balance`.
 
 Section vertical rhythm uses `--space-7` (6rem) between sections at desktop, `--space-6` (4rem) at mobile. Within a section, `--space-4` between a heading and its content, `--space-3` between sibling items.
 
-The page container is `max-width: 1160px`, centered, with `padding-inline: clamp(1.25rem, 4vw, 3rem)`.
+The page container is `max-width: var(--container)`, centered, with `padding-inline: var(--gutter)`. Both are defined in `tokens.css`. Never repeat the underlying values in a component.
 
 ### D5. Hero, exactly
 
@@ -73,7 +73,7 @@ Left column (about 55% at desktop), in order and nothing more:
 
 1. Eyebrow: `Developer`
 2. Headline: **I build machine learning, tools, and games.**
-3. Subtext, 21 words: `Computer Science, De La Salle Lipa. A melanoma classifier at 90% accuracy, an award winning Unity thesis, and web apps you can open here.`
+3. Subtext, 20 words: `Computer Science, De La Salle Lipa. A melanoma classifier at 90% accuracy, an award winning Unity thesis, shipped web apps.`
 4. Two links: `See the work` (primary, to `/work`) and `Resume` (secondary)
 
 Right column: one artwork, `object-fit: cover`, `aspect-ratio: 4/5`, `border-radius: var(--radius-md)`, a `1px solid var(--line)` border, no shadow. Pick it by id from the `artwork` collection so it is stable across builds, not random.

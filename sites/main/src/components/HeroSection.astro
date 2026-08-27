@@ -1,0 +1,152 @@
+---
+import { artworks } from "@portfolio/content";
+
+const base = import.meta.env.BASE_URL;
+const withBase = (path: string) => `${base.replace(/\/+$/, "")}/${path.replace(/^\/+/, "")}`;
+
+// Picked by id, not randomly, so the hero image is stable across builds.
+const HERO_ARTWORK_ID = "artwork-02";
+const heroArtwork = artworks.find((a) => a.id === HERO_ARTWORK_ID);
+if (!heroArtwork) {
+  throw new Error(`Hero artwork "${HERO_ARTWORK_ID}" is missing from the artwork collection.`);
+}
+
+// The artwork collection's own alt text is Phase 1 index placeholder copy
+// ("Concept artwork, image N of 16"). This is the largest, above the fold,
+// eager loaded image on the page, so it gets real, hardcoded alt text here
+// rather than the placeholder, the same way WorldsGrid.astro writes its own
+// tile alt text instead of passing the collection's through.
+const heroAlt =
+  "Monochrome ink illustration of two armored figures facing off in a rain-soaked " +
+  "battlefield. One wields a glowing, rune-etched red sword while a soldier in a " +
+  "World War I style helmet levels a bayoneted rifle.";
+---
+
+<section class="hero">
+  <div class="hero__text">
+    <p class="hero__eyebrow">Developer</p>
+    <h1 class="hero__headline">I build machine learning, tools, and games.</h1>
+    <p class="hero__subtext">
+      Computer Science, De La Salle Lipa. A melanoma classifier at 90% accuracy, an award
+      winning Unity thesis, shipped web apps.
+    </p>
+    <div class="hero__links">
+      <a class="hero__link hero__link--primary" href={withBase("work")}>See the work</a>
+      <a class="hero__link hero__link--secondary" href={withBase("resume.pdf")}>Resume</a>
+    </div>
+  </div>
+  <div class="hero__media">
+    <img
+      src={withBase(heroArtwork.src)}
+      alt={heroAlt}
+      width={heroArtwork.width}
+      height={heroArtwork.height}
+      loading="eager"
+    />
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 11fr 9fr;
+    gap: var(--space-6);
+    align-items: center;
+  }
+
+  .hero__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .hero__eyebrow {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .hero__headline {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(var(--step-5), 1.6rem + 3.4vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.03;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .hero__subtext {
+    margin: var(--space-1) 0 0;
+    max-width: var(--measure);
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--ink-mid);
+  }
+
+  .hero__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  .hero__link {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-2) var(--space-4);
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: opacity 150ms ease;
+  }
+
+  .hero__link--primary {
+    background: var(--accent);
+    color: var(--ground);
+  }
+
+  .hero__link--secondary {
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+
+  .hero__link:hover {
+    opacity: 0.85;
+  }
+
+  .hero__media img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line);
+  }
+
+  @media (max-width: 767px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+
+    .hero__media {
+      order: 2;
+    }
+
+    .hero__text {
+      order: 1;
+    }
+  }
+</style>

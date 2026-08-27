@@ -22,6 +22,27 @@ export const httpUrl = z
     message: "Must be an absolute http or https URL",
   });
 
+const ABSOLUTE_HTTP_PATTERN = /^https?:\/\//;
+const URI_SCHEME_PATTERN = /^[a-zA-Z][a-zA-Z0-9+.-]*:/;
+
+/**
+ * A link target: either an absolute http(s) URL, or a site-relative path
+ * that composes with the base path at render time (no leading slash), the
+ * same way `media`, `src`, `thumb`, and `pdf` already do.
+ */
+export const linkHref = z
+  .string()
+  .min(1, "Link cannot be empty")
+  .refine(
+    (value) =>
+      ABSOLUTE_HTTP_PATTERN.test(value) ||
+      (!URI_SCHEME_PATTERN.test(value) && !value.startsWith("/")),
+    {
+      message:
+        "Link must be an absolute http or https URL, or a site-relative path with no leading slash",
+    },
+  );
+
 export const slug = z
   .string()
   .min(1, "Slug cannot be empty")

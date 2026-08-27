@@ -1,7 +1,7 @@
 import { projectSchema, type Domain, type Project } from "./schema.js";
 
 const GH = "https://github.com/KurtLylePaulino";
-const DOCS = "https://kurtlylepaulino.github.io/FullPortfolio/assets/docs";
+const DOCS = "docs";
 const DEMOS = "https://kurtlylepaulino.github.io/FullPortfolio/projects";
 
 const raw = [
@@ -29,7 +29,7 @@ const raw = [
       { label: "Engine", value: "Unity" },
       { label: "Role", value: "Lead author" },
     ],
-    media: "projects/circuit-breakers.webp",
+    media: "img/projects/circuit-breakers.webp",
     links: [
       { label: "Read the thesis", href: `${DOCS}/IMRAD_FinalManuscript_CircuitBreakers.pdf`, kind: "primary" },
       { label: "Download build", href: "https://drive.google.com/drive/folders/1MR4GVBB7N-VR-IjFD2au542m6tY4nwLT" },
@@ -59,7 +59,7 @@ const raw = [
       { label: "Combinations", value: "18" },
       { label: "Interface", value: "CLI and GUI" },
     ],
-    media: "projects/fightmap-generator.webp",
+    media: "img/projects/fightmap-generator.webp",
     links: [{ label: "View on GitHub", href: `${GH}/MapGenConcept`, kind: "primary" }],
   },
   {
@@ -86,7 +86,7 @@ const raw = [
       { label: "Scenes", value: "81" },
       { label: "Regions", value: "8" },
     ],
-    media: "projects/canrael-codex.webp",
+    media: "img/projects/canrael-codex.webp",
     demo: `${DEMOS}/canrael-codex/index.html`,
     links: [
       { label: "Open the demo", href: `${DEMOS}/canrael-codex/index.html`, kind: "primary" },
@@ -145,7 +145,7 @@ const raw = [
       { label: "Build step", value: "None" },
       { label: "Audio", value: "Web Audio" },
     ],
-    media: "projects/haiku-daily.webp",
+    media: "img/projects/haiku-daily.webp",
     demo: `${DEMOS}/haiku-daily/index.html`,
     links: [
       { label: "Open the demo", href: `${DEMOS}/haiku-daily/index.html`, kind: "primary" },
@@ -176,7 +176,7 @@ const raw = [
       { label: "Sources", value: "79" },
       { label: "Audio", value: "Web Audio" },
     ],
-    media: "projects/jianghu-proverbs.webp",
+    media: "img/projects/jianghu-proverbs.webp",
     demo: `${DEMOS}/jianghu-proverbs/index.html`,
     links: [
       { label: "Open the demo", href: `${DEMOS}/jianghu-proverbs/index.html`, kind: "primary" },
