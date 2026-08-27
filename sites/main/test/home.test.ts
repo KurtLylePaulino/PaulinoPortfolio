@@ -1,10 +1,48 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync, statSync } from "node:fs";
+import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { artworks, featuredProjects, projects, tracks, writings } from "@portfolio/content";
 import { describe, expect, it } from "vitest";
 
-const html = () =>
-  readFileSync(fileURLToPath(new URL("../dist/index.html", import.meta.url)), "utf8");
+const distIndexPath = fileURLToPath(new URL("../dist/index.html", import.meta.url));
+
+// Everything the built home page can depend on: this site's own source, and
+// the shared UI components it renders through.
+const sourceRoots = [
+  fileURLToPath(new URL("../src/", import.meta.url)),
+  fileURLToPath(new URL("../../../packages/ui/components/", import.meta.url)),
+];
+
+/** Recursively finds the newest mtime among files under `dir`. */
+function newestMtimeUnder(dir: string): number {
+  let newest = 0;
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      newest = Math.max(newest, newestMtimeUnder(full));
+    } else if (entry.isFile()) {
+      newest = Math.max(newest, statSync(full).mtimeMs);
+    }
+  }
+  return newest;
+}
+
+// Tests read the built HTML, not the source. A `pretest` script rebuilds
+// before `vitest run`, but nothing stops someone from running `vitest`
+// directly against a stale dist/. This guard makes that failure loud
+// instead of silently asserting on yesterday's build.
+function assertBuildIsFresh() {
+  const distMtime = statSync(distIndexPath).mtimeMs;
+  const newestSource = Math.max(...sourceRoots.map(newestMtimeUnder));
+  if (distMtime < newestSource) {
+    throw new Error("dist/index.html is older than source. Run npm run build first.");
+  }
+}
+
+const html = () => {
+  assertBuildIsFresh();
+  return readFileSync(distIndexPath, "utf8");
+};
 
 describe("home page", () => {
   it("names the role before anything else", () => {
@@ -95,13 +133,5 @@ describe("page discipline", () => {
     const doc = html();
     const inlineHex = doc.match(/style="[^"]*#[0-9a-fA-F]{3,8}/g) ?? [];
     expect(inlineHex).toEqual([]);
-  });
-
-  it("never hardcodes the deploy path in a link", () => {
-    const doc = html();
-    const hardcoded = (doc.match(/href="\/PaulinoPortfolio/g) ?? []).length;
-    const total = (doc.match(/href="/g) ?? []).length;
-    expect(total).toBeGreaterThan(0);
-    expect(hardcoded).toBeLessThanOrEqual(total);
   });
 });
