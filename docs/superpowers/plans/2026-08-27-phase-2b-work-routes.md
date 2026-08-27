@@ -28,7 +28,7 @@ Every visual task below ends with a deploy and a look, not a review dispatch. Th
 ## Global Constraints
 
 - **Node >= 22.12.0.** Currently 24.19.0.
-- **Zero literal em dashes (U+2014) and en dashes (U+2013)** in any file, including commit messages. Write them as `—` and `–` escapes, never the literal character. That includes any regex you write to detect them.
+- **Zero literal em dashes (U+2014) and en dashes (U+2013)** in any file, including commit messages. Write them as `\u2014` and `\u2013` escapes, never the literal character. That includes any regex you write to detect them.
 - **No colour outside the token set.** Every colour is a `var(--*)` or a `color-mix()` of tokens. No hex in a component.
 - **Dark theme only.** No light mode, no toggle.
 - **No CSS framework**, no utility classes. Scoped `<style>` per component.
@@ -265,7 +265,7 @@ describe("work index", () => {
   });
 
   it("ships no literal em or en dash", () => {
-    expect(/[–—]/.test(html())).toBe(false);
+    expect(/[\u2013\u2014]/.test(html())).toBe(false);
   });
 });
 ```
@@ -337,7 +337,7 @@ describe("project detail pages", () => {
 
   it("ships no literal em or en dash on any page", () => {
     for (const project of projects) {
-      expect(/[–—]/.test(page(project.id))).toBe(false);
+      expect(/[\u2013\u2014]/.test(page(project.id))).toBe(false);
     }
   });
 });
