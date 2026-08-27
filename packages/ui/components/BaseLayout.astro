@@ -12,6 +12,11 @@ interface Props {
   description: string;
 }
 const { title, description } = Astro.props;
+
+// No og:image exists yet, so twitter:card would advertise a large image
+// preview and render an empty card. Use "summary" until a real og:image
+// ships, then switch this back to "summary_large_image".
+const twitterCard = "summary";
 ---
 <!doctype html>
 <html lang="en">
@@ -23,7 +28,7 @@ const { title, description } = Astro.props;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content={twitterCard} />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
   </head>
   <body>
