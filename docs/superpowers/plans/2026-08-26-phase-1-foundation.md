@@ -35,7 +35,8 @@
 | `packages/content/src/projects.ts` | The 7 projects as typed data, parsed through the schema at module load. |
 | `packages/content/src/collections.ts` | Loads and validates the bulk JSON manifests (art, music, writing). |
 | `packages/content/src/index.ts` | Public surface. The only path sites import from. |
-| `packages/content/data/art.json` | 175 artwork entries, migrated. Machine-generated bulk. |
+| `packages/content/data/art.json` | 83 artwork entries, migrated. Machine-generated bulk. |
+| `packages/content/data/video.json` | 6 video entries, migrated. Machine-generated bulk. |
 | `packages/content/data/music.json` | 40 track entries, migrated. |
 | `packages/content/data/writing.json` | 10 document entries, migrated. |
 | `packages/content/test/*.test.ts` | Schema, data-integrity, and copy-rule tests. |
