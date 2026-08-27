@@ -39,6 +39,11 @@
   --radius-sm: 2px;
   --radius-md: 3px;
   --measure: 65ch;
+
+  /* Page container: the max-width and fluid side padding used by every
+     full-width section. Never repeat the underlying values in a component. */
+  --container: 1160px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
 }
 
 *, *::before, *::after { box-sizing: border-box; }

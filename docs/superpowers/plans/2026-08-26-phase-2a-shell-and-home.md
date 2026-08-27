@@ -65,7 +65,7 @@ Body text is capped at `--measure` (65ch). Headings get `text-wrap: balance`.
 
 Section vertical rhythm uses `--space-7` (6rem) between sections at desktop, `--space-6` (4rem) at mobile. Within a section, `--space-4` between a heading and its content, `--space-3` between sibling items.
 
-The page container is `max-width: 1160px`, centered, with `padding-inline: clamp(1.25rem, 4vw, 3rem)`.
+The page container is `max-width: var(--container)`, centered, with `padding-inline: var(--gutter)`. Both are defined in `tokens.css`. Never repeat the underlying values in a component.
 
 ### D5. Hero, exactly
 
