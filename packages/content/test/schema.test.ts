@@ -133,7 +133,6 @@ describe("writingSchema", () => {
     kind: "reference",
     blurb: "A chronology of the Abyss and the Lighthouses.",
     pdf: "docs/writing/canrael-timeline.pdf",
-    year: "2025",
   };
 
   it("accepts a complete document", () => {
@@ -144,18 +143,9 @@ describe("writingSchema", () => {
     expect(writingSchema.safeParse({ ...validWriting, kind: "novel" }).success).toBe(false);
   });
 
-  it("rejects a year range, because writing takes a single year", () => {
-    expect(writingSchema.safeParse({ ...validWriting, year: "2024-2025" }).success).toBe(false);
-  });
-
   it("rejects an em dash in the blurb", () => {
     const bad = { ...validWriting, blurb: "A chronology \u2014 of the Abyss." };
     expect(writingSchema.safeParse(bad).success).toBe(false);
-  });
-
-  it("accepts a document with no year", () => {
-    const { year, ...withoutYear } = validWriting;
-    expect(writingSchema.safeParse(withoutYear).success).toBe(true);
   });
 });
 

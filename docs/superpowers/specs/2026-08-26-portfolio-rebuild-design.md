@@ -93,10 +93,10 @@ Project  { id, title, domain: 'ml'|'game'|'web'|'tool', year, featured,
 Artwork  { id, collection, src, thumb, alt, width, height }
 Video    { id, title, src, poster? }
 Track    { id, title, collection: 'original'|'dnd'|'ruina', src, vibe, duration? }
-Writing  { id, title, kind, blurb, pdf, year }
+Writing  { id, title, kind, blurb, pdf }
 ```
 
-**Three amendments made on 2026-08-26**, after auditing the actual source manifests
+**Four amendments made on 2026-08-26**, after auditing the actual source manifests
 against these schemas. Each was a decision Kurt approved:
 
 1. **`Video` is its own type.** The old `art.json` has six `motion` entries that are MP4
@@ -113,6 +113,10 @@ against these schemas. Each was a decision Kurt approved:
    "Yuria character study, image 3 of 14". Keeping the field required preserves the
    accessibility discipline the Lighthouse target depends on. Replacing the generated text
    with real descriptions is a tracked follow-up, not a blocker.
+4. **`Writing.year` was removed.** No source document records a date, so every entry carried
+   it as `undefined`; the field was dead weight with a type of `string | undefined` that was
+   never anything but `undefined`. Inventing dates for someone's creative work was considered
+   and rejected earlier in this project, so the field is gone rather than left optional.
 
 ### 3.4.1 Actual content inventory
 
@@ -145,7 +149,7 @@ section heading. See 4.2.
 Kurt expects to add projects after launch. Adding one must never require touching layout code,
 so the build treats the project list as data from the start:
 
-1. Append an entry to `packages/content/data/projects.ts`. The Zod schema validates it at build
+1. Append an entry to `packages/content/src/projects.ts`. The Zod schema validates it at build
    time, and a malformed entry fails the build instead of shipping a broken card.
 2. Drop its image in `media/`. The image pipeline picks it up.
 3. Optionally add a case study for the technical site. A project without one simply does not get
