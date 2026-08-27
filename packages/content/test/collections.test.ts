@@ -71,6 +71,13 @@ describe("videos", () => {
     expect(new Set(ids).size).toBe(ids.length);
     for (const v of videos) expect(v.src.length).toBeGreaterThan(0);
   });
+
+  it("uses relative paths, never absolute URLs", () => {
+    for (const v of videos) {
+      expect(v.src).not.toMatch(/^https?:\/\//);
+      expect(v.src).not.toMatch(/^assets\//);
+    }
+  });
 });
 
 describe("tracks", () => {
@@ -84,9 +91,14 @@ describe("tracks", () => {
     expect(tracksByCollection("ruina")).toHaveLength(11);
   });
 
-  it("excludes the personal picks category, which duplicates other tracks", () => {
+  it("gives every track a unique id", () => {
     const ids = tracks.map((t) => t.id);
     expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it("excludes the personal picks category, which duplicates other tracks", () => {
+    expect(tracks.some((t) => (t.collection as string) === "personal")).toBe(false);
+    expect(tracks).toHaveLength(40);
   });
 
   it("gives every track a vibe", () => {
@@ -97,11 +109,21 @@ describe("tracks", () => {
     const styled = tracks.filter((t) => t.title.includes("\u2014"));
     expect(styled).toHaveLength(6);
   });
+
+  it("keeps every vibe free of em dashes and en dashes", () => {
+    const dash = /[\u2013\u2014]/;
+    for (const t of tracks) expect(dash.test(t.vibe)).toBe(false);
+  });
 });
 
 describe("writings", () => {
   it("loads all 10 documents", () => {
     expect(writings).toHaveLength(10);
+  });
+
+  it("gives every document a unique id", () => {
+    const ids = writings.map((w) => w.id);
+    expect(new Set(ids).size).toBe(ids.length);
   });
 
   it("covers every kind used by the archive", () => {
