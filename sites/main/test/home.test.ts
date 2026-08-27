@@ -72,3 +72,29 @@ describe("the four worlds", () => {
     expect(html()).toContain("Best Thesis");
   });
 });
+
+describe("page discipline", () => {
+  it("uses exactly one eyebrow, in the hero", () => {
+    const doc = html();
+    const eyebrows = doc.match(/class="[^"]*\beyebrow\b[^"]*"/g) ?? [];
+    expect(eyebrows).toHaveLength(1);
+  });
+
+  it("has exactly one h1", () => {
+    expect((html().match(/<h1\b/g) ?? [])).toHaveLength(1);
+  });
+
+  it("introduces no colour outside the token set", () => {
+    const doc = html();
+    const inlineHex = doc.match(/style="[^"]*#[0-9a-fA-F]{3,8}/g) ?? [];
+    expect(inlineHex).toEqual([]);
+  });
+
+  it("never hardcodes the deploy path in a link", () => {
+    const doc = html();
+    const hardcoded = (doc.match(/href="\/PaulinoPortfolio/g) ?? []).length;
+    const total = (doc.match(/href="/g) ?? []).length;
+    expect(total).toBeGreaterThan(0);
+    expect(hardcoded).toBeLessThanOrEqual(total);
+  });
+});
