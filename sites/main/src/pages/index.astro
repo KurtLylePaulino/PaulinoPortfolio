@@ -17,7 +17,10 @@ import AboutContact from "../components/AboutContact.astro";
     <HeroSection />
     <div class="page">
       <SelectedWork />
-      <Credentials />
+    </div>
+    <!-- Breaks the container so the band runs edge to edge. -->
+    <Credentials />
+    <div class="page">
       <WorldsGrid />
       <AboutContact />
     </div>
@@ -26,16 +29,26 @@ import AboutContact from "../components/AboutContact.astro";
 </BaseLayout>
 
 <style>
+  /* Rhythm lives here so the contained runs and the full bleed band share one
+     cadence, rather than each section inventing its own margins. */
+  main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
   .page {
     max-width: var(--container);
     margin-inline: auto;
     padding-inline: var(--gutter);
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: var(--space-6);
   }
 
   @media (min-width: 768px) {
+    main,
     .page {
       gap: var(--space-7);
     }

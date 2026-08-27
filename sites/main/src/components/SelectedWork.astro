@@ -1,5 +1,6 @@
 ---
 import Reveal from "@portfolio/ui/components/Reveal.astro";
+import SectionHeading from "@portfolio/ui/components/SectionHeading.astro";
 import { featuredProjects, type Project } from "@portfolio/content";
 
 const base = import.meta.env.BASE_URL;
@@ -20,7 +21,7 @@ const primaryLink = (project: Project) =>
 
 <Reveal>
   <section class="selected-work">
-    <h2 class="selected-work__heading">Selected work</h2>
+    <SectionHeading text="Selected work" size="large" />
 
     {
       feature && (
@@ -92,16 +93,6 @@ const primaryLink = (project: Project) =>
     gap: var(--space-4);
   }
 
-  .selected-work__heading {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: var(--step-3);
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    line-height: 1.1;
-    color: var(--ink);
-    text-wrap: balance;
-  }
 
   /* Media sits ABOVE or BESIDE the copy on a raised surface here. The worlds
      grid overlays copy ON TOP of its images, so the two stay distinct. */

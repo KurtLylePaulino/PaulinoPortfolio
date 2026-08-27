@@ -1,5 +1,6 @@
 ---
 import Reveal from "@portfolio/ui/components/Reveal.astro";
+import SectionHeading from "@portfolio/ui/components/SectionHeading.astro";
 
 const base = import.meta.env.BASE_URL;
 const withBase = (path: string) => `${base.replace(/\/+$/, "")}/${path.replace(/^\/+/, "")}`;
@@ -18,7 +19,7 @@ const links = [
 
 <Reveal>
   <section class="about">
-    <h2 class="about__heading">About</h2>
+    <SectionHeading text="About" />
     <div class="about__columns">
       <div class="about__prose">
         <p>
@@ -59,21 +60,11 @@ const links = [
     gap: var(--space-4);
   }
 
-  .about__heading {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: var(--step-3);
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    line-height: 1.1;
-    color: var(--ink);
-    text-wrap: balance;
-  }
-
   .about__columns {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1.6fr 1fr;
     gap: var(--space-6);
+    align-items: start;
   }
 
   .about__prose {
@@ -87,30 +78,88 @@ const links = [
     margin: 0;
     font-family: var(--font-body);
     font-size: var(--step-0);
-    font-weight: 400;
-    line-height: 1.6;
+    line-height: 1.7;
     color: var(--ink-mid);
   }
 
+  /* The opening paragraph carries the introduction, so it gets the weight.
+     Everything after it is supporting detail. */
+  .about__prose p:first-child {
+    font-size: var(--step-1);
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  /* The links were a bare list floating on the page ground, which closed the
+     page on its weakest element. A panel gives the column somewhere to sit and
+     makes each row a real target rather than a word. */
   .about__links {
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
     margin: 0;
     padding: 0;
     list-style: none;
+    background: var(--raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .about__links li + li {
+    border-top: 1px solid var(--line);
   }
 
   .about__links a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
     font-family: var(--font-mono);
-    font-size: var(--step-0);
-    color: var(--ink);
+    font-size: var(--step--1);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
     text-decoration: none;
+    transition:
+      color 200ms var(--ease),
+      background-color 200ms var(--ease);
+  }
+
+  /* A quiet affordance, drawn in CSS so it never reaches the link's
+     accessible name. */
+  .about__links a::after {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    border-right: 1px solid currentColor;
+    border-top: 1px solid currentColor;
+    transform: rotate(45deg);
+    opacity: 0.5;
+    transition:
+      transform 200ms var(--ease),
+      opacity 200ms var(--ease);
   }
 
   .about__links a:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 7%, transparent);
+  }
+
+  .about__links a:hover::after {
+    transform: rotate(45deg) translate(2px, -2px);
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about__links a,
+    .about__links a::after {
+      transition: none;
+    }
+
+    .about__links a:hover::after {
+      transform: rotate(45deg);
+    }
   }
 
   @media (max-width: 767px) {

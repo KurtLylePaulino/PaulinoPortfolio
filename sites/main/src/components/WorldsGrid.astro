@@ -1,5 +1,6 @@
 ---
 import Reveal from "@portfolio/ui/components/Reveal.astro";
+import SectionHeading from "@portfolio/ui/components/SectionHeading.astro";
 import { artworks, projects, tracks, writings } from "@portfolio/content";
 
 const base = import.meta.env.BASE_URL;
@@ -68,7 +69,7 @@ const worlds = [
 
 <Reveal>
   <section class="worlds">
-    <h2 class="worlds__heading">Four worlds</h2>
+    <SectionHeading text="Four worlds" />
     <div class="worlds__grid">
       {
         worlds.map((world) => (
@@ -95,16 +96,6 @@ const worlds = [
     gap: var(--space-4);
   }
 
-  .worlds__heading {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: var(--step-3);
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    line-height: 1.1;
-    color: var(--ink);
-    text-wrap: balance;
-  }
 
   /* Asymmetric bento rather than four equal cells: wide, narrow / narrow, wide.
      Four areas for four worlds, so a cell can never be left empty. */

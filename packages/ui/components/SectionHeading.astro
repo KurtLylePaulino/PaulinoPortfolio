@@ -1,0 +1,74 @@
+---
+/**
+ * One heading treatment for every section on the site.
+ *
+ * This existed as three byte-identical CSS blocks copied across three
+ * components, which is both duplication and the reason the page had no
+ * internal hierarchy: every section announced itself in exactly the same
+ * voice. Varying a heading now means editing one file.
+ *
+ * The trailing rule is structural, not decoration: it marks where the
+ * heading ends and the section's content begins, and it is what gives the
+ * page an archival register rather than a stack of centred titles.
+ */
+interface Props {
+  /** Heading text. */
+  text: string;
+  /** Heading level. Sections use 2; the hero owns the only h1. */
+  level?: 2 | 3;
+  /** Larger treatment for a section that should carry more weight. */
+  size?: "default" | "large";
+}
+
+const { text, level = 2, size = "default" } = Astro.props;
+const Tag = `h${level}` as "h2" | "h3";
+---
+
+<div class:list={["section-heading", size === "large" && "section-heading--large"]}>
+  <Tag class="section-heading__text">{text}</Tag>
+  <span class="section-heading__rule" aria-hidden="true"></span>
+</div>
+
+<style>
+  .section-heading {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    width: 100%;
+  }
+
+  .section-heading__text {
+    margin: 0;
+    flex: 0 0 auto;
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .section-heading--large .section-heading__text {
+    font-size: var(--step-4);
+  }
+
+  /* Runs from the end of the heading to the edge of the container. */
+  .section-heading__rule {
+    flex: 1 1 auto;
+    height: 1px;
+    min-width: var(--space-5);
+    background: linear-gradient(
+      to right,
+      color-mix(in srgb, var(--accent) 45%, transparent),
+      var(--line) 22%,
+      color-mix(in srgb, var(--line) 30%, transparent) 100%
+    );
+  }
+
+  @media (max-width: 767px) {
+    .section-heading {
+      gap: var(--space-3);
+    }
+  }
+</style>
