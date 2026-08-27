@@ -76,8 +76,15 @@ describe("the four worlds", () => {
 describe("page discipline", () => {
   it("uses exactly one eyebrow, in the hero", () => {
     const doc = html();
-    const eyebrows = doc.match(/class="[^"]*\beyebrow\b[^"]*"/g) ?? [];
-    expect(eyebrows).toHaveLength(1);
+    // BEM-aware: an element counts as an eyebrow when one of its class
+    // tokens is exactly "eyebrow" or ends with "__eyebrow" (e.g.
+    // "about__eyebrow"). A raw \beyebrow\b regex misses that case because
+    // "_" is a word character, so "\b" never breaks between "_" and "e".
+    const eyebrowCount = (doc.match(/class="[^"]*"/g) ?? []).filter((attr) => {
+      const tokens = attr.slice(7, -1).split(/\s+/);
+      return tokens.some((t) => t === "eyebrow" || t.endsWith("__eyebrow"));
+    }).length;
+    expect(eyebrowCount).toBe(1);
   });
 
   it("has exactly one h1", () => {
