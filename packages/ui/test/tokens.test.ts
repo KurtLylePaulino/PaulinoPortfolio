@@ -41,7 +41,7 @@ describe("tokens.css", () => {
   });
 
   it("never uses pure black or pure white", () => {
-    expect(css).not.toMatch(/#000000|#ffffff/i);
+    expect(css).not.toMatch(/#(000000|000|ffffff|fff)\b/i);
   });
 
   it("contains no em dashes", () => {

@@ -2,6 +2,7 @@
    Hex values are mirrored from packages/ui/src/palette.ts and a test
    fails if the two ever drift apart. */
 :root {
+  color-scheme: dark;
   --ground: #0c0b09;
   --raised: #151310;
   --line: #282420;
