@@ -1,0 +1,238 @@
+---
+import Reveal from "@portfolio/ui/components/Reveal.astro";
+import { featuredProjects, type Project } from "@portfolio/content";
+
+const base = import.meta.env.BASE_URL;
+const withBase = (path: string) => `${base.replace(/\/+$/, "")}/${path.replace(/^\/+/, "")}`;
+
+// Do not assume featuredProjects has a fixed length: the first entry is the
+// wide feature row, everything else fills the grid beneath it.
+const [feature, ...remainder] = featuredProjects;
+const gridColumns = Math.min(remainder.length, 2);
+
+const primaryLink = (project: Project) =>
+  project.links.find((link) => link.kind === "primary") ?? project.links[0];
+---
+
+<Reveal>
+  <section class="selected-work">
+    <h2 class="selected-work__heading">Selected work</h2>
+
+    {
+      feature && (
+        <article class="feature">
+          <div class="feature__media">
+            {feature.media ? (
+              <img src={withBase(feature.media)} alt={feature.tagline} loading="lazy" />
+            ) : (
+              <div class="feature__media-fallback" aria-hidden="true" />
+            )}
+          </div>
+          <div class="feature__body">
+            <h3 class="feature__title">{feature.title}</h3>
+            {feature.award && <p class="feature__award">{feature.award}</p>}
+            <p class="feature__blurb">{feature.blurb}</p>
+            <ul class="chips">
+              {feature.stack.map((item) => (
+                <li class="chip">{item}</li>
+              ))}
+            </ul>
+            {primaryLink(feature) && (
+              <a class="feature__link" href={primaryLink(feature)!.href}>
+                {primaryLink(feature)!.label}
+              </a>
+            )}
+          </div>
+        </article>
+      )
+    }
+
+    {
+      remainder.length > 0 && (
+        <div class="grid" style={`grid-template-columns: repeat(${gridColumns}, 1fr);`}>
+          {remainder.map((project) => (
+            <article class="cell">
+              <h3 class="cell__title">{project.title}</h3>
+              <p class="cell__year">{project.year}</p>
+              <p class="cell__blurb">{project.blurb}</p>
+              <ul class="chips">
+                {project.stack.map((item) => (
+                  <li class="chip">{item}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      )
+    }
+
+    <a class="all-work" href={withBase("work")}>All work</a>
+  </section>
+</Reveal>
+
+<style>
+  .selected-work {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .selected-work__heading {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  .feature {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+    align-items: center;
+  }
+
+  .feature__media img,
+  .feature__media-fallback {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line);
+  }
+
+  .feature__media img {
+    object-fit: cover;
+  }
+
+  .feature__media-fallback {
+    background: var(--raised);
+  }
+
+  .feature__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .feature__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+
+  .feature__award {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+    color: var(--accent);
+  }
+
+  .feature__blurb {
+    margin: 0;
+    max-width: var(--measure);
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--ink-mid);
+  }
+
+  .feature__link {
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    width: fit-content;
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .cell {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .cell__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+
+  .cell__year {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+    color: var(--ink-low);
+  }
+
+  .cell__blurb {
+    margin: 0;
+    max-width: var(--measure);
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--ink-mid);
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chip {
+    padding: var(--space-1) var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--ink-low);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+  }
+
+  .all-work {
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    width: fit-content;
+  }
+
+  @media (max-width: 767px) {
+    .feature {
+      grid-template-columns: 1fr;
+    }
+
+    .grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>

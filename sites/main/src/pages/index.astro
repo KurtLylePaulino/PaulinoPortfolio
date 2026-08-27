@@ -1,16 +1,33 @@
 ---
-import { domainsInUse, featuredProjects, projects } from "@portfolio/content";
 import BaseLayout from "@portfolio/ui/components/BaseLayout.astro";
+import SiteNav from "@portfolio/ui/components/SiteNav.astro";
+import SiteFooter from "@portfolio/ui/components/SiteFooter.astro";
+import HeroSection from "../components/HeroSection.astro";
+import SelectedWork from "../components/SelectedWork.astro";
 ---
+
 <BaseLayout title="Kurt Lyle Paulino" description="Developer. Machine learning, tools, and games.">
-  <main>
-    <h1>Kurt Lyle Paulino</h1>
-    <p>{projects.length} projects, {featuredProjects.length} featured.</p>
-    <ul>
-      {projects.map((project) => (
-        <li>{project.title} ({project.domain}, {project.year})</li>
-      ))}
-    </ul>
-    <p>Domains: {domainsInUse().join(", ")}</p>
+  <SiteNav current="home" />
+  <main class="page">
+    <HeroSection />
+    <SelectedWork />
   </main>
+  <SiteFooter />
 </BaseLayout>
+
+<style>
+  .page {
+    max-width: var(--container);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .page {
+      gap: var(--space-7);
+    }
+  }
+</style>
