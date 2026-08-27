@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { EM_DASH_MESSAGE, httpUrl, prose, properName, slug } from "../src/primitives.js";
+import { EM_DASH_MESSAGE, httpUrl, linkHref, prose, properName, slug } from "../src/primitives.js";
 
 describe("prose", () => {
   it("accepts ordinary copy", () => {
@@ -36,6 +36,24 @@ describe("httpUrl", () => {
 
   it("rejects a relative path", () => {
     expect(httpUrl.safeParse("/assets/img/a.webp").success).toBe(false);
+  });
+});
+
+describe("linkHref", () => {
+  it("accepts an absolute https URL", () => {
+    expect(linkHref.parse("https://example.com/a")).toBe("https://example.com/a");
+  });
+
+  it("accepts a site-relative path", () => {
+    expect(linkHref.parse("docs/file.pdf")).toBe("docs/file.pdf");
+  });
+
+  it("rejects a leading slash", () => {
+    expect(linkHref.safeParse("/docs/file.pdf").success).toBe(false);
+  });
+
+  it("rejects an empty string", () => {
+    expect(linkHref.safeParse("").success).toBe(false);
   });
 });
 

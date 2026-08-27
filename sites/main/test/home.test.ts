@@ -74,6 +74,17 @@ describe("home page", () => {
     expect(imgs.length).toBeGreaterThan(0);
     for (const img of imgs) expect(img).toMatch(/\balt=/);
   });
+
+  it("resolves the thesis link under the base path, not the old site", () => {
+    const doc = html();
+    const match = doc.match(/href="([^"]*IMRAD[^"]*)"/);
+    expect(match).not.toBeNull();
+    const href = match![1]!;
+    // Base-relative: rooted at the site origin, not a bare content path.
+    expect(href.startsWith("/")).toBe(true);
+    expect(href).toContain("docs/IMRAD_FinalManuscript_CircuitBreakers.pdf");
+    expect(href).not.toContain("FullPortfolio");
+  });
 });
 
 describe("the four worlds", () => {

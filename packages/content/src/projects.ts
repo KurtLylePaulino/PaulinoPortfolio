@@ -1,7 +1,7 @@
 import { projectSchema, type Domain, type Project } from "./schema.js";
 
 const GH = "https://github.com/KurtLylePaulino";
-const DOCS = "https://kurtlylepaulino.github.io/FullPortfolio/assets/docs";
+const DOCS = "docs";
 const DEMOS = "https://kurtlylepaulino.github.io/FullPortfolio/projects";
 
 const raw = [

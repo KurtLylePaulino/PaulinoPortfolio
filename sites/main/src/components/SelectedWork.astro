@@ -5,6 +5,10 @@ import { featuredProjects, type Project } from "@portfolio/content";
 const base = import.meta.env.BASE_URL;
 const withBase = (path: string) => `${base.replace(/\/+$/, "")}/${path.replace(/^\/+/, "")}`;
 
+const ABSOLUTE_HREF_PATTERN = /^https?:\/\//;
+/** A link's href may be absolute (external) or site-relative (internal). */
+const resolveHref = (href: string) => (ABSOLUTE_HREF_PATTERN.test(href) ? href : withBase(href));
+
 // Do not assume featuredProjects has a fixed length: the first entry is the
 // wide feature row, everything else fills the grid beneath it.
 const [feature, ...remainder] = featuredProjects;
@@ -38,7 +42,13 @@ const primaryLink = (project: Project) =>
               ))}
             </ul>
             {primaryLink(feature) && (
-              <a class="feature__link" href={primaryLink(feature)!.href}>
+              <a
+                class="feature__link"
+                href={resolveHref(primaryLink(feature)!.href)}
+                {...ABSOLUTE_HREF_PATTERN.test(primaryLink(feature)!.href)
+                  ? { target: "_blank", rel: "noopener" }
+                  : {}}
+              >
                 {primaryLink(feature)!.label}
               </a>
             )}
