@@ -1,5 +1,4 @@
 ---
-import Reveal from "@portfolio/ui/components/Reveal.astro";
 import { artworks } from "@portfolio/content";
 
 const base = import.meta.env.BASE_URL;
@@ -11,33 +10,41 @@ const heroArtwork = artworks.find((a) => a.id === HERO_ARTWORK_ID);
 if (!heroArtwork) {
   throw new Error(`Hero artwork "${HERO_ARTWORK_ID}" is missing from the artwork collection.`);
 }
+
+// The artwork collection's own alt text is Phase 1 index placeholder copy
+// ("Concept artwork, image N of 16"). This is the largest, above the fold,
+// eager loaded image on the page, so it gets real, hardcoded alt text here
+// rather than the placeholder, the same way WorldsGrid.astro writes its own
+// tile alt text instead of passing the collection's through.
+const heroAlt =
+  "Monochrome ink illustration of two armored figures facing off in a rain-soaked " +
+  "battlefield. One wields a glowing, rune-etched red sword while a soldier in a " +
+  "World War I style helmet levels a bayoneted rifle.";
 ---
 
-<Reveal>
-  <section class="hero">
-    <div class="hero__text">
-      <p class="hero__eyebrow">Developer</p>
-      <h1 class="hero__headline">I build machine learning, tools, and games.</h1>
-      <p class="hero__subtext">
-        Computer Science, De La Salle Lipa. A melanoma classifier at 90% accuracy, an award
-        winning Unity thesis, shipped web apps.
-      </p>
-      <div class="hero__links">
-        <a class="hero__link hero__link--primary" href={withBase("work")}>See the work</a>
-        <a class="hero__link hero__link--secondary" href={withBase("resume.pdf")}>Resume</a>
-      </div>
+<section class="hero">
+  <div class="hero__text">
+    <p class="hero__eyebrow">Developer</p>
+    <h1 class="hero__headline">I build machine learning, tools, and games.</h1>
+    <p class="hero__subtext">
+      Computer Science, De La Salle Lipa. A melanoma classifier at 90% accuracy, an award
+      winning Unity thesis, shipped web apps.
+    </p>
+    <div class="hero__links">
+      <a class="hero__link hero__link--primary" href={withBase("work")}>See the work</a>
+      <a class="hero__link hero__link--secondary" href={withBase("resume.pdf")}>Resume</a>
     </div>
-    <div class="hero__media">
-      <img
-        src={withBase(heroArtwork.src)}
-        alt={heroArtwork.alt}
-        width={heroArtwork.width}
-        height={heroArtwork.height}
-        loading="eager"
-      />
-    </div>
-  </section>
-</Reveal>
+  </div>
+  <div class="hero__media">
+    <img
+      src={withBase(heroArtwork.src)}
+      alt={heroAlt}
+      width={heroArtwork.width}
+      height={heroArtwork.height}
+      loading="eager"
+    />
+  </div>
+</section>
 
 <style>
   .hero {
