@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist",
+    "tsBuildInfoFile": "./tsconfig.tsbuildinfo"
+  },
+  "files": [
+    "data/art.json",
+    "data/music.json",
+    "data/video.json",
+    "data/writing.json"
+  ],
+  "include": ["src/**/*", "test/**/*"]
+}
