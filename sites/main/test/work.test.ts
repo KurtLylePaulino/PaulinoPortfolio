@@ -24,8 +24,16 @@ describe("work index", () => {
 
   it("tags every row with its domain so CSS can filter it", () => {
     const doc = html();
-    const rows = doc.match(/data-domain="[a-z]+"/g) ?? [];
+    // Match the row ELEMENTS, not every occurrence of the string. Counting raw
+    // substrings also catches the attribute selectors inside the injected
+    // <style> block, which made this assertion depend on whether that CSS
+    // happened to use single or double quotes.
+    const rows = doc.match(/<a[^>]*\sdata-domain="[a-z]+"[^>]*>/g) ?? [];
     expect(rows).toHaveLength(projects.length);
+  });
+
+  it("carries exactly one h1, so the page outline does not start at h2", () => {
+    expect(html().match(/<h1\b/g) ?? []).toHaveLength(1);
   });
 
   it("states the count from the data", () => {

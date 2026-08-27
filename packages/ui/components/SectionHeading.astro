@@ -14,14 +14,18 @@
 interface Props {
   /** Heading text. */
   text: string;
-  /** Heading level. Sections use 2; the hero owns the only h1. */
-  level?: 2 | 3;
+  /**
+   * Heading level. On the home page the hero owns the h1 and sections use 2.
+   * A route whose heading IS the page title passes 1, so every page has
+   * exactly one h1 rather than starting its outline at h2.
+   */
+  level?: 1 | 2 | 3;
   /** Larger treatment for a section that should carry more weight. */
   size?: "default" | "large";
 }
 
 const { text, level = 2, size = "default" } = Astro.props;
-const Tag = `h${level}` as "h2" | "h3";
+const Tag = `h${level}` as "h1" | "h2" | "h3";
 ---
 
 <div class:list={["section-heading", size === "large" && "section-heading--large"]}>
