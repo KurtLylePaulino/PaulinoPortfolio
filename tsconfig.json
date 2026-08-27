@@ -1,0 +1,9 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/content" },
+    { "path": "./packages/ui" },
+    { "path": "./sites/main" },
+    { "path": "./sites/technical" }
+  ]
+}

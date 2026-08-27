@@ -1,0 +1,32 @@
+[
+  {
+    "id": "showcase-1",
+    "title": "Showcase 1",
+    "src": "video/art/Showcase_1.mp4"
+  },
+  {
+    "id": "showcase-2",
+    "title": "Showcase 2",
+    "src": "video/art/Showcase_2.mp4"
+  },
+  {
+    "id": "showcase-3",
+    "title": "Showcase 3",
+    "src": "video/art/Showcase_3.mp4"
+  },
+  {
+    "id": "showcase-4",
+    "title": "Showcase 4",
+    "src": "video/art/Showcase_4.mp4"
+  },
+  {
+    "id": "showcase-5",
+    "title": "Showcase 5",
+    "src": "video/art/Showcase_5.mp4"
+  },
+  {
+    "id": "showcase-6",
+    "title": "Showcase 6",
+    "src": "video/art/Showcase_6.mp4"
+  }
+]
